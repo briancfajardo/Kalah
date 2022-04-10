@@ -70,7 +70,6 @@ public class KalahGUI extends JFrame implements ActionListener {
 		KalahGUI gui = new KalahGUI();
 		gui.setLocationRelativeTo(null);
 	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
