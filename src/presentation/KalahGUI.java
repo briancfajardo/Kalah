@@ -6,13 +6,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class KalahGUI extends JFrame {
-
+	JMenu menu;
 	public KalahGUI(){
 
 		setVisible(true);
 		setTitle("Kalah");
 		prepareElements();
 		prepareActions();
+		menu = new JMenu("Nuevo menú");
 	}
 	public void prepareElements(){
 		setSize(960,540);
