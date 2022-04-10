@@ -27,6 +27,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 		prepareElementsMenu();
 
 	}
+
 	private void prepareElementsMenu(){
 		menu = new JMenuBar();
 		setJMenuBar(menu);
