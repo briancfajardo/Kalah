@@ -46,8 +46,8 @@ public class KalahGUI extends JFrame implements ActionListener {
 		archivo.add(abrir);
 		archivo.add(salvar);
 		archivo.add(salir);
-
 	}
+
 	private void prepareActions() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
