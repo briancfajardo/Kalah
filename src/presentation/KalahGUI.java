@@ -78,11 +78,15 @@ public class KalahGUI extends JFrame implements ActionListener {
 		archivos = new JFileChooser();
 		archivos.showOpenDialog(this);
 		partida = archivos.getSelectedFile();
+        JOptionPane.showMessageDialog(this,"El elemento está en construcción","Anuncio",
+                1,null);
 	}
 
 	private void salvarArchivos(){
 		archivos = new JFileChooser();
 		archivos.showSaveDialog(this);
+        JOptionPane.showMessageDialog(this,"El elemento está en construcción","Anuncio",
+                1,null);
 	}
 	private void refresh(){
 
