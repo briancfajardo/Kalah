@@ -3,6 +3,7 @@ package presentation;
 import javax.swing.*;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -10,6 +11,9 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 
 public class KalahGUI extends JFrame implements ActionListener {
+
+	private int ancho = 960;
+	private int alto = 540;
 	private JMenuBar menu;
 	private JMenu archivoM;
 	private JMenuItem nuevo;
@@ -18,18 +22,20 @@ public class KalahGUI extends JFrame implements ActionListener {
 	private JMenuItem salir;
 	private JFileChooser archivos;
 	private File partida;
+	private Fondo fondo = new Fondo();
 
 
 	public KalahGUI(){
+		this.setContentPane(fondo);
 		setTitle("Kalah");
 		prepareElements();
 		prepareActions();
 		setVisible(true);
 	}
 	private void prepareElements(){
-		setSize(960,540);
+		setSize(ancho,alto);
 		prepareElementsMenu();
-		prepareElementsBoard();
+		//prepareElementsBoard();
 
 	}
 
@@ -55,7 +61,28 @@ public class KalahGUI extends JFrame implements ActionListener {
 	}
 	private void prepareElementsBoard(){
 
+
+
+		BorderLayout border = new BorderLayout();
+		Button juego = new Button("Nuevo Juego");
+		Button continuar = new Button("Continuar juego");
+		Button salir = new Button("Salir");
+		setLayout(border);
+        JLabel titulo = new JLabel("KALAH");
+		titulo.setFont(new Font("Serif", Font.ROMAN_BASELINE, 50));
+		//titulo.setVerticalAlignment(SwingConstants.CENTER);
+		titulo.setHorizontalAlignment(SwingConstants.LEADING);
+		add(titulo, BorderLayout.NORTH);
+		add(juego,BorderLayout.EAST);
+		add(continuar,BorderLayout.CENTER);
+		add(salir,BorderLayout.SOUTH);
+		//setBackground(new Color(128,64,0));
+
+
 	}
+    private void refresh(){
+
+    }
 
 	private void prepareActions() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -88,12 +115,11 @@ public class KalahGUI extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(this,"El elemento está en construcción","Anuncio",
                 1,null);
 	}
-	private void refresh(){
 
-	}
 
 	public static void main(String[] arg){
 		KalahGUI gui = new KalahGUI();
+		//gui.setResizable(false);
 		gui.setLocationRelativeTo(null);
 	}
 	@Override
@@ -113,5 +139,17 @@ public class KalahGUI extends JFrame implements ActionListener {
 		}
 
 
+	}
+	class Fondo extends JPanel{
+		private Image imagen;
+		@Override
+		public void paint(Graphics g){
+			imagen = new ImageIcon(getClass().getResource("/presentation/Madera.jpg")).getImage();
+			g.drawImage(imagen,0,0,getWidth(),getHeight(),this);
+
+			setOpaque(false);
+
+			super.paint(g);
+		}
 	}
 }
