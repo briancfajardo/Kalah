@@ -114,16 +114,25 @@ public class KalahGUI extends JFrame implements ActionListener {
 	}
 	private void prepareElementsBoard(){
 		ImageIcon imagen = new ImageIcon(getClass().getResource("/presentation/bola.png"));
-		setLayout(new GridLayout(rows,cols,10,10));
+		ImageIcon imagen2 = new ImageIcon(getClass().getResource("/presentation/bola2.png"));
+		setLayout(new GridLayout(rows,cols));
 		int cont = 0;
 		for(int i = 0; i < rows; i++){
 			for (int j = 0; j < cols; j++){
 
 				JButton aux = new JButton();
 				aux.setOpaque(true);
-				aux.setIcon(imagen);
+				aux.setIcon(new ImageIcon(imagen.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
 				aux.setContentAreaFilled(false);
 				aux.setText(cont+"");
+				aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 15));
+				aux.setForeground(new Color(255, 255, 255));
+				aux.setHorizontalTextPosition(SwingConstants.CENTER);
+				aux.setVerticalTextPosition(SwingConstants.BOTTOM);
+				aux.setVerticalAlignment(SwingConstants.CENTER);
+				aux.setHorizontalAlignment(SwingConstants.LEFT);
+				aux.setRolloverIcon(new ImageIcon(imagen2.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
+				aux.setBorderPainted(false);
 				add(aux);
 				cont += 1;
 			}
