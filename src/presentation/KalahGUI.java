@@ -17,6 +17,8 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 	private int ancho = 960;
 	private int alto = 540;
+	private int rows = 3;
+	private int cols = 6;
 	private JMenuBar menu;
 	private JMenu archivoM;
 	private JMenuItem nuevo;
@@ -34,10 +36,12 @@ public class KalahGUI extends JFrame implements ActionListener {
 		prepareElements();
 		prepareActions();
 		setVisible(true);
+
 	}
 	private void prepareElements(){
 		setSize(ancho,alto);
 		prepareElementsMenu();
+		//prepareElementsBeginning();
 		prepareElementsBoard();
 
 	}
@@ -62,10 +66,10 @@ public class KalahGUI extends JFrame implements ActionListener {
 		archivoM.add(salvar);
 		archivoM.add(salir);
 	}
-	private void prepareElementsBoard(){
+	private void prepareElementsBeginning(){
 		JLabel titulo = new JLabel("KALAH");
 		Button juego = new Button("Nuevo Juego");
-		Button continuar = new Button("Continuar juego");
+		Button continuar = new Button("Configurar juego");
 		Button salir = new Button("Salir");
 		JPanel panelBotones = new JPanel();
 		JPanel panelSalir = new JPanel();
@@ -108,6 +112,26 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 
 	}
+	private void prepareElementsBoard(){
+		ImageIcon imagen = new ImageIcon(getClass().getResource("/presentation/bola.png"));
+		setLayout(new GridLayout(rows,cols,10,10));
+		int cont = 0;
+		for(int i = 0; i < rows; i++){
+			for (int j = 0; j < cols; j++){
+
+				JButton aux = new JButton();
+				aux.setOpaque(true);
+				aux.setIcon(imagen);
+				aux.setContentAreaFilled(false);
+				aux.setText(cont+"");
+				add(aux);
+				cont += 1;
+			}
+
+		}
+
+	}
+
     private void refresh(){
 
     }
@@ -130,26 +154,35 @@ public class KalahGUI extends JFrame implements ActionListener {
 		}
 	}
 	private void abrirArchivos(){
+
 		archivos = new JFileChooser();
 		archivos.showOpenDialog(this);
-		partida = archivos.getSelectedFile();
-		String nombre = partida.getName();
-        JOptionPane.showMessageDialog(this,"El elemento está en construcción\n" + nombre,"Abrir",
-                1,null);
+		try {
+			partida = archivos.getSelectedFile();
+			String nombre = partida.getName();
+			JOptionPane.showMessageDialog(this,"El elemento está en construcción, se está abriendo un archivo\n" + nombre,"Abrir",
+					1,null);
+		}catch (Exception e){
+
+		}
+
 	}
 
 	private void salvarArchivos(){
 		archivos = new JFileChooser();
 		archivos.showSaveDialog(this);
 		String nombre = archivos.getSelectedFile()+"";
-        JOptionPane.showMessageDialog(this,"El elemento está en construcción\n" + nombre,"Guardar",
-                1,null);
+		if (!nombre.equals(null+"")){
+			JOptionPane.showMessageDialog(this,"El elemento está en construcción, se está guardando un archivo\n" + nombre,"Guardar",
+					1,null);
+		}
+
 	}
 
 
 	public static void main(String[] arg){
 		KalahGUI gui = new KalahGUI();
-		//gui.setResizable(false);
+		gui.setResizable(false);
 		gui.setLocationRelativeTo(null);
 	}
 	@Override
