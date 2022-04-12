@@ -154,4 +154,6 @@ public class KalahGUI extends JFrame implements ActionListener {
 			super.paint(g);
 		}
 	}
+
+	//Camilin :)
 }
