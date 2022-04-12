@@ -26,7 +26,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 
 	public KalahGUI(){
-		this.setContentPane(fondo);
+		//this.setContentPane(fondo);
 		setTitle("Kalah");
 		prepareElements();
 		prepareActions();
@@ -35,7 +35,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 	private void prepareElements(){
 		setSize(ancho,alto);
 		prepareElementsMenu();
-		//prepareElementsBoard();
+		prepareElementsBoard();
 
 	}
 
@@ -61,8 +61,6 @@ public class KalahGUI extends JFrame implements ActionListener {
 	}
 	private void prepareElementsBoard(){
 
-
-
 		BorderLayout border = new BorderLayout();
 		Button juego = new Button("Nuevo Juego");
 		Button continuar = new Button("Continuar juego");
@@ -70,13 +68,15 @@ public class KalahGUI extends JFrame implements ActionListener {
 		setLayout(border);
         JLabel titulo = new JLabel("KALAH");
 		titulo.setFont(new Font("Serif", Font.ROMAN_BASELINE, 50));
+		titulo.setBackground(new Color(48, 145, 108));
+		//titulo.setBounds(new Rectangle());
 		//titulo.setVerticalAlignment(SwingConstants.CENTER);
 		titulo.setHorizontalAlignment(SwingConstants.LEADING);
 		add(titulo, BorderLayout.NORTH);
 		add(juego,BorderLayout.EAST);
-		add(continuar,BorderLayout.CENTER);
+		add(continuar,BorderLayout.WEST);
 		add(salir,BorderLayout.SOUTH);
-		//setBackground(new Color(128,64,0));
+		this.getContentPane().setBackground(new Color(128,64,0));
 
 
 	}
@@ -105,14 +105,16 @@ public class KalahGUI extends JFrame implements ActionListener {
 		archivos = new JFileChooser();
 		archivos.showOpenDialog(this);
 		partida = archivos.getSelectedFile();
-        JOptionPane.showMessageDialog(this,"El elemento está en construcción","Anuncio",
+		String nombre = partida.getName();
+        JOptionPane.showMessageDialog(this,"El elemento está en construcción\n" + nombre,"Anuncio",
                 1,null);
 	}
 
 	private void salvarArchivos(){
 		archivos = new JFileChooser();
 		archivos.showSaveDialog(this);
-        JOptionPane.showMessageDialog(this,"El elemento está en construcción","Anuncio",
+		String nombre = archivos.getSelectedFile()+"";
+        JOptionPane.showMessageDialog(this,"El elemento está en construcción\n" + nombre,"Anuncio",
                 1,null);
 	}
 
