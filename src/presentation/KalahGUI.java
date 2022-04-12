@@ -17,13 +17,6 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 	private int ancho = 960;
 	private int alto = 540;
-	private int rows = 3;
-	private int cols = 6;
-	private int seed = 3;
-	private int valor1 = 0;
-	private int valor2 = 0;
-	private int mov1 = 0;
-	private int mov2 = 0;
 	private JMenuBar menu;
 	private JMenu archivoM;
 	private JMenuItem nuevo;
@@ -84,7 +77,11 @@ public class KalahGUI extends JFrame implements ActionListener {
 		juego.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				KalahGUIGame game = new KalahGUIGame();
+				game.setVisible(true);
+				game.setResizable(false);
+				game.setLocationRelativeTo(null);
+				dispose();
 			}
 		});
 
@@ -136,74 +133,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 
 	}
-	private void prepareElementsBoard(){
-		ImageIcon imagen = new ImageIcon(getClass().getResource("/presentation/bola.png"));
-		ImageIcon imagen2 = new ImageIcon(getClass().getResource("/presentation/bola2.png"));
-		ImageIcon imagen3 = new ImageIcon(getClass().getResource("/presentation/transparente.png"));
-		setLayout(new GridLayout(rows,cols));
-		int cont = 0;
-		for(int i = 0; i < rows; i++){
-			for (int j = 0; j < cols; j++){
 
-				if (i != 1) {
-					JButton aux = new JButton();
-					aux.setOpaque(true);
-					aux.setIcon(new ImageIcon(imagen.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
-					aux.setContentAreaFilled(false);
-					aux.setText(seed+"");
-					aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 15));
-					aux.setForeground(new Color(255, 255, 255));
-					aux.setHorizontalTextPosition(SwingConstants.CENTER);
-					aux.setVerticalTextPosition(SwingConstants.BOTTOM);
-					aux.setVerticalAlignment(SwingConstants.CENTER);
-					aux.setHorizontalAlignment(SwingConstants.LEFT);
-					aux.setRolloverIcon(new ImageIcon(imagen2.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
-					aux.setBorderPainted(false);
-					cont += 1;
-					add(aux);
-				}else if(j == 0 || j == cols-1){
-					JLabel aux = new JLabel(new ImageIcon(imagen.getImage().getScaledInstance((ancho*8/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
-					add(aux);
-				}else if(j == 1) {
-					JLabel aux = new JLabel();
-					aux.setText("<html><center>Valor en tu almacen: <br>" + valor1 + "</center><html>");
-					aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 20*6/cols));
-					aux.setForeground(new Color(255, 255, 255));
-					add(aux);
-				}else if(j == cols-2) {
-					JLabel aux = new JLabel();
-					aux.setText("<html><center>Valor en tu almacen: <br>" + valor2 + "</center><html>");
-					aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 20*6/cols));
-					aux.setForeground(new Color(255, 255, 255));
-					add(aux);
-				}else if(j == 2){
-					JLabel aux = new JLabel("<html><center>Has hecho "+ mov1 + " movimientos. ¡Apresúrate a ganar!</center><html>");
-					aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 20*6/cols));
-					aux.setForeground(new Color(255, 255, 255));
-					add(aux);
-				}else if(j == cols-3) {
-					JLabel aux = new JLabel("<html><center>Has hecho " + mov2 + " movimientos. ¡Apresúrate a ganar!</center><html>");
-					aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 20*6/cols));
-					aux.setForeground(new Color(255, 255, 255));
-					add(aux);
-				}else{
-					JLabel aux = new JLabel(new ImageIcon(imagen3.getImage().getScaledInstance((ancho*8/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
-					aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 20*6/cols));
-					aux.setForeground(new Color(255, 255, 255));
-					add(aux);
-				}
-
-
-
-			}
-
-		}
-
-	}
-
-    private void refresh(){
-	    prepareElementsBoard();
-    }
 
 	private void prepareActions() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
