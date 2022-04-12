@@ -133,7 +133,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 	}
 
     private void refresh(){
-
+	    prepareElementsBoard();
     }
 
 	private void prepareActions() {
@@ -216,5 +216,5 @@ public class KalahGUI extends JFrame implements ActionListener {
 		}
 	}
 
-	//Camilin :)
+	//Camilin :) :( :o
 }
