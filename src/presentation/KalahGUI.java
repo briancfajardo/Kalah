@@ -29,7 +29,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 
 	public KalahGUI(){
-		//this.setContentPane(fondo);
+		this.setContentPane(fondo);
 		setTitle("Kalah");
 		prepareElements();
 		prepareActions();
@@ -108,7 +108,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 		add(panelBotones);
 		add(panelSalir);
 
-		this.getContentPane().setBackground(new Color(128,64,0));
+		//this.getContentPane().setBackground(new Color(128,64,0));
 
 
 	}
@@ -138,7 +138,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 		archivos.showOpenDialog(this);
 		partida = archivos.getSelectedFile();
 		String nombre = partida.getName();
-        JOptionPane.showMessageDialog(this,"El elemento está en construcción\n" + nombre,"Anuncio",
+        JOptionPane.showMessageDialog(this,"El elemento está en construcción\n" + nombre,"Abrir",
                 1,null);
 	}
 
@@ -146,7 +146,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 		archivos = new JFileChooser();
 		archivos.showSaveDialog(this);
 		String nombre = archivos.getSelectedFile()+"";
-        JOptionPane.showMessageDialog(this,"El elemento está en construcción\n" + nombre,"Anuncio",
+        JOptionPane.showMessageDialog(this,"El elemento está en construcción\n" + nombre,"Guardar",
                 1,null);
 	}
 
@@ -178,7 +178,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 		private Image imagen;
 		@Override
 		public void paint(Graphics g){
-			imagen = new ImageIcon(getClass().getResource("/presentation/Madera.jpg")).getImage();
+			imagen = new ImageIcon(getClass().getResource("/presentation/fondo3.jpg")).getImage();
 			g.drawImage(imagen,0,0,getWidth(),getHeight(),this);
 
 			setOpaque(false);
