@@ -3,6 +3,9 @@ package presentation;
 import javax.swing.*;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,22 +63,51 @@ public class KalahGUI extends JFrame implements ActionListener {
 		archivoM.add(salir);
 	}
 	private void prepareElementsBoard(){
-
-		BorderLayout border = new BorderLayout();
 		Button juego = new Button("Nuevo Juego");
+		juego.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
+		juego.setSize(30,30);
+
 		Button continuar = new Button("Continuar juego");
+		continuar.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
+		continuar.setSize(30,30);
+
+		JPanel panelBotones = new JPanel();
+		panelBotones.setBorder(new CompoundBorder(new EmptyBorder(100,150,30,150),
+				new TitledBorder("")));
+		panelBotones.setLayout(new GridLayout(1,2));
+		panelBotones.add(juego);
+		panelBotones.add(continuar);
+
+		setLayout(new FlowLayout());
+
+		JPanel panelSalir = new JPanel();
+		panelSalir.setBorder(new CompoundBorder(new EmptyBorder(30,150,30,150),
+				new TitledBorder("")));
+		panelSalir.setLayout(new GridLayout(1,1));
+
 		Button salir = new Button("Salir");
-		setLayout(border);
+		salir.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
+		salir.setSize(30,30);
+
+		panelSalir.add(salir);
+		//salir.setLocation(465,300);
+		//salir.setBounds(465,300,100,30);
+		//setLayout(border);
         JLabel titulo = new JLabel("KALAH");
-		titulo.setFont(new Font("Serif", Font.ROMAN_BASELINE, 50));
-		titulo.setBackground(new Color(48, 145, 108));
-		//titulo.setBounds(new Rectangle());
-		//titulo.setVerticalAlignment(SwingConstants.CENTER);
-		titulo.setHorizontalAlignment(SwingConstants.LEADING);
-		add(titulo, BorderLayout.NORTH);
-		add(juego,BorderLayout.EAST);
-		add(continuar,BorderLayout.WEST);
-		add(salir,BorderLayout.SOUTH);
+		titulo.setForeground(new Color(255, 255, 255));
+		titulo.setFont(new Font("Serif", Font.CENTER_BASELINE, 100));
+		//titulo.setBackground(new Color(48, 145, 108));
+		////titulo.setBounds(new Rectangle());
+		////titulo.setVerticalAlignment(SwingConstants.CENTER);
+		//titulo.setHorizontalAlignment(SwingConstants.LEADING);
+		//add(titulo, BorderLayout.NORTH);
+		//add(juego,BorderLayout.EAST);
+		//add(continuar,BorderLayout.WEST);
+		//add(salir,BorderLayout.SOUTH);
+		add(titulo);
+		add(panelBotones);
+		add(panelSalir);
+
 		this.getContentPane().setBackground(new Color(128,64,0));
 
 
