@@ -19,6 +19,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 	private int alto = 540;
 	private JMenuBar menu;
 	private JMenu archivoM;
+    private JMenuItem config;
 	private JMenuItem nuevo;
 	private JMenuItem abrir;
 	private JMenuItem salvar;
@@ -59,10 +60,16 @@ public class KalahGUI extends JFrame implements ActionListener {
 		salvar.addActionListener(this);
 		salir.addActionListener(this);
 
+        config = new JMenuItem("Configuración");
+        config.addActionListener(this);
+
 		archivoM.add(nuevo);
 		archivoM.add(abrir);
 		archivoM.add(salvar);
 		archivoM.add(salir);
+        menu.add(config);
+
+
 	}
 	private void prepareElementsBeginning(){
 		JLabel titulo = new JLabel("KALAH");
@@ -85,13 +92,16 @@ public class KalahGUI extends JFrame implements ActionListener {
 			}
 		});
 
-
 		continuar.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
 		continuar.setSize(30,30);
 		continuar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+                KalahGUIConfig game = new KalahGUIConfig();
+                game.setVisible(true);
+                game.setResizable(false);
+                game.setLocationRelativeTo(null);
+                dispose();
 			}
 		});
 
@@ -188,7 +198,11 @@ public class KalahGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getSource() == nuevo){
-
+			KalahGUIGame game = new KalahGUIGame();
+			game.setVisible(true);
+			game.setResizable(false);
+			game.setLocationRelativeTo(null);
+			dispose();
 		}
 		if(e.getSource() == abrir){
 			abrirArchivos();
@@ -199,6 +213,13 @@ public class KalahGUI extends JFrame implements ActionListener {
 		if(e.getSource() == salir){
 			close();
 		}
+        if(e.getSource() == config){
+            KalahGUIConfig game = new KalahGUIConfig();
+            game.setVisible(true);
+            game.setResizable(false);
+            game.setLocationRelativeTo(null);
+            dispose();
+        }
 
 
 	}

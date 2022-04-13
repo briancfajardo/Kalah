@@ -27,6 +27,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     private JMenuItem abrir;
     private JMenuItem salvar;
     private JMenuItem salir;
+    private JMenuItem config;
     private JFileChooser archivos;
     private File partida;
     private Fondo fondo = new Fondo();
@@ -62,10 +63,16 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         salvar.addActionListener(this);
         salir.addActionListener(this);
 
+        config = new JMenuItem("Configuración");
+        config.addActionListener(this);
+
         archivoM.add(nuevo);
         archivoM.add(abrir);
         archivoM.add(salvar);
         archivoM.add(salir);
+        menu.add(config);
+
+
     }
     //Carga de imagenes
 
@@ -205,6 +212,13 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }
         if(e.getSource() == salir){
             close();
+        }
+        if(e.getSource() == config){
+            KalahGUIConfig game = new KalahGUIConfig();
+            game.setVisible(true);
+            game.setResizable(false);
+            game.setLocationRelativeTo(null);
+            dispose();
         }
 
 
