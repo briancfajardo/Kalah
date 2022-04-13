@@ -87,6 +87,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     JButton aux = new JButton();
                     aux.setOpaque(true);
                     aux.setContentAreaFilled(false);
+                    //aux.setBackground(new Color(35, 190, 184));
                     if (i == 0) {
                         aux.setIcon(new ImageIcon(azules.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                         aux.setRolloverIcon(new ImageIcon(zoomAzules.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
