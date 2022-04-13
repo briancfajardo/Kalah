@@ -28,6 +28,11 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
     private KalahGUIConfig.Fondo fondo = new KalahGUIConfig.Fondo();
     private Color col1 = null;
     private Color col2 = null;
+    private String colSem1;
+    private String colSem2;
+    private int cantSem;
+    private String[] coloresPosibles = {"rojo", "azul", "amarillo", "verde", "negro", "gris", "morado", "café", "rosado"};
+    private Integer[] numerosPosibles = {0,1,2,3,4,5,6,7,8};
 
     public KalahGUIConfig(){
         this.setContentPane(fondo);
@@ -78,6 +83,9 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         JPanel panelBotones = new JPanel();
         Button color1 = new Button("Cambiar colores del jugador 1");
         Button color2 = new Button("Cambiar colores del jugador 2");
+        Button colSemillas1 = new Button("Cambiar color de las semillas del jugador 1");
+        Button colSemillas2 = new Button("Cambiar color de las semillas del jugador 2");
+        Button cantSemillas = new Button("Cambiar el número de semillas para los jugadores");
         Button aceptar = new Button("Aceptar");
 
         JLabel titulo = new JLabel("Opciones de configuración");
@@ -91,7 +99,7 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         color1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                col1 = JColorChooser.showDialog(KalahGUIConfig.this,"Seleccione un nuevo color...", Color.white);
+                col1 = JColorChooser.showDialog(KalahGUIConfig.this,"Seleccione un nuevo color para las casas", Color.white);
             }
         });
 
@@ -101,8 +109,59 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         color2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                col2 = JColorChooser.showDialog(KalahGUIConfig.this,"Seleccione un nuevo color...", Color.white);
+                col2 = JColorChooser.showDialog(KalahGUIConfig.this,"Seleccione un nuevo color para las casas", Color.white);
 
+            }
+        });
+
+        colSemillas1.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
+        colSemillas1.setSize(30,30);
+        colSemillas1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        colSemillas1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                colSem1 = (String) JOptionPane.showInputDialog(
+                        null,
+                        "Escoge el nuevo color de las semillas para el jugador 1",
+                        "Cambiar color semillas para el jugador 1",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        coloresPosibles,
+                        coloresPosibles[0]);
+            }
+        });
+
+        colSemillas2.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
+        colSemillas2.setSize(30,30);
+        colSemillas2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        colSemillas2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                colSem2 = (String) JOptionPane.showInputDialog(
+                        null,
+                        "Escoge el nuevo color de las semillas para el jugador 1",
+                        "Cambiar color semillas para el jugador 1",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        coloresPosibles,
+                        coloresPosibles[0]);
+            }
+        });
+
+        cantSemillas.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
+        cantSemillas.setSize(30,30);
+        cantSemillas.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cantSemillas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cantSem = (Integer) JOptionPane.showInputDialog(
+                        null,
+                        "Escoge el nuevo color de las semillas para el jugador 1",
+                        "Cambiar color semillas para el jugador 1",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        numerosPosibles,
+                        numerosPosibles[0]);
             }
         });
 
@@ -133,6 +192,9 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         panelBotones.setOpaque(false);
         panelBotones.add(color1);
         panelBotones.add(color2);
+        panelBotones.add(colSemillas1);
+        panelBotones.add(colSemillas2);
+        panelBotones.add(cantSemillas);
         panelBotones.add(aceptar);
 
         add(titulo);

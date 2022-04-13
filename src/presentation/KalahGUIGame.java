@@ -261,12 +261,24 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }
     }
 
-    private void colorSemilla(String color, int jugador){
+    public void colorSemilla(String color, int jugador){
         //Colores posibles: azul, cafe, amarillo, gris, morado, negro, rosado, verde, rojo
         if (jugador == 1){
             semillas1 = color;
         }else if (jugador == 2){
             semillas2 = color;
+        }else{
+            JOptionPane.showMessageDialog(this,"El jugador no existe\n" ,"colorSemilla",
+                    1,null);
+        }
+    }
+
+    public void numSemilla(int cantidad, int jugador){
+        //Numeros posibles: 0,1,2,3,...
+        if (jugador == 1){
+            cantSemillas1 = cantidad;
+        }else if (jugador == 2){
+            cantSemillas2 = cantidad;
         }else{
             JOptionPane.showMessageDialog(this,"El jugador no existe\n" ,"colorSemilla",
                     1,null);
