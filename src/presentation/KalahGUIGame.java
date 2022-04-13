@@ -51,10 +51,10 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    public KalahGUIGame(Color color1, Color color2){
+    public KalahGUIGame(Color color1, Color color2, String sem1, String sem2, int numSem){
         this.setContentPane(fondo);
         setTitle("Kalah");
-        prepareElements(color1, color2);
+        prepareElements(color1, color2, sem1, sem2, numSem);
         prepareActions();
         setVisible(true);
     }
@@ -66,10 +66,10 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
     }
 
-    private void prepareElements(Color color1, Color color2){
+    private void prepareElements(Color color1, Color color2, String sem1, String sem2, int numSem){
         setSize(ancho,alto);
         prepareElementsMenu();
-        prepareElementsBoard(color1, color2);
+        prepareElementsBoard(color1, color2, sem1, sem2, numSem);
 
     }
 
@@ -183,9 +183,15 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     }
 
 
-    private void prepareElementsBoard(Color color1, Color color2){
+    private void prepareElementsBoard(Color color1, Color color2, String colSem1, String colSem2, int numSem){
         ImageIcon imagen = new ImageIcon(getClass().getResource("/presentation/bola.png"));
         ImageIcon imagen3 = new ImageIcon(getClass().getResource("/presentation/transparente.png"));
+        numSemilla(numSem, 1);
+        numSemilla(numSem, 2);
+        colorSemilla(colSem1, 1);
+        colorSemilla(colSem2, 2);
+        validadorImagenesJug1();
+        validadorImagenesJug2();
         //ImageIcon semilla3 = new ImageIcon(getClass().getResource("/presentation/3semillas.png"));
 
         setLayout(new GridLayout(rows,cols));
@@ -285,7 +291,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }
     }
 
-    private void validadorImagenesJug1(){
+    public void validadorImagenesJug1(){
         if (cantSemillas1 == 0){
             jugador1 = new ImageIcon(getClass().getResource("/presentation/bola.png"));
             zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/bola2.png"));
@@ -375,8 +381,8 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                 jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasRosado.png"));
                 zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasRosada.png"));
             } else if (semillas1.equals("verde")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/2semillasVerde.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasVerde.png"));
+                jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasVerde.png"));
+                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasVerde.png"));
             }
 
         }else if (cantSemillas1 == 4) {
@@ -532,7 +538,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     }
 
 
-    private void validadorImagenesJug2(){
+    public void validadorImagenesJug2(){
         if (cantSemillas2  == 0){
             jugador2 = new ImageIcon(getClass().getResource("/presentation/bola.png"));
             zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/bola2.png"));
@@ -622,8 +628,8 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                 jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasRosado.png"));
                 zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasRosada.png"));
             } else if (semillas2.equals("verde")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/2semillasVerde.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasVerde.png"));
+                jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasVerde.png"));
+                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasVerde.png"));
             }
 
         }else if (cantSemillas2 == 4) {

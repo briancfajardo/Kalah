@@ -28,9 +28,9 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
     private KalahGUIConfig.Fondo fondo = new KalahGUIConfig.Fondo();
     private Color col1 = null;
     private Color col2 = null;
-    private String colSem1;
-    private String colSem2;
-    private int cantSem;
+    private String colSem1 = "blue";
+    private String colSem2 = "red";
+    private int cantSem = 3;
     private String[] coloresPosibles = {"rojo", "azul", "amarillo", "verde", "negro", "gris", "morado", "café", "rosado"};
     private Integer[] numerosPosibles = {0,1,2,3,4,5,6,7,8};
 
@@ -154,7 +154,7 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         cantSemillas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cantSem = (Integer) JOptionPane.showInputDialog(
+                Integer canSemillas = (Integer) JOptionPane.showInputDialog(
                         null,
                         "Escoge el nuevo color de las semillas para el jugador 1",
                         "Cambiar color semillas para el jugador 1",
@@ -162,17 +162,20 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
                         null,
                         numerosPosibles,
                         numerosPosibles[0]);
+                cantSem = canSemillas.intValue();
             }
         });
 
         aceptar.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
         aceptar.setSize(30,30);
         aceptar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        colSem1 = "black";
         aceptar.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (col1 != null || col2 != null){
-                    KalahGUIGame game = new KalahGUIGame(col1, col2);
+                if (col1 != null || col2 != null || !colSem1.equals("blue") || !colSem2.equals("red") || cantSem != 3) {
+                    KalahGUIGame game = new KalahGUIGame(col1, col2, colSem1, colSem2, cantSem);
                     game.setResizable(false);
                     game.setLocationRelativeTo(null);
                     dispose();
