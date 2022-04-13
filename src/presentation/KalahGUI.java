@@ -130,7 +130,6 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 		setLayout(new FlowLayout());
 
-
 		panelSalir.setBorder(new CompoundBorder(new EmptyBorder(30,1000,30,1000),
 				new TitledBorder("")));
 		panelSalir.setLayout(new GridLayout(1,1));

@@ -1,7 +1,12 @@
 package presentation;
 
 import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -21,6 +26,8 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
     private JFileChooser archivos;
     private File partida;
     private KalahGUIConfig.Fondo fondo = new KalahGUIConfig.Fondo();
+    private Color col1 = null;
+    private Color col2 = null;
 
     public KalahGUIConfig(){
         this.setContentPane(fondo);
@@ -32,6 +39,7 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
     private void prepareElements(){
         setSize(ancho,alto);
         prepareElementsMenu();
+        prepareElementsConfig();
     }
 
     private void prepareElementsMenu(){
@@ -62,6 +70,73 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         archivoM.add(salvar);
         archivoM.add(salir);
 
+
+    }
+
+    private void prepareElementsConfig(){
+
+        JPanel panelBotones = new JPanel();
+        Button color1 = new Button("Cambiar colores del jugador 1");
+        Button color2 = new Button("Cambiar colores del jugador 2");
+        Button aceptar = new Button("Aceptar");
+
+        JLabel titulo = new JLabel("Opciones de configuración");
+
+        titulo.setForeground(new Color(255, 255, 255));
+        titulo.setFont(new Font("Serif", Font.CENTER_BASELINE, 70));
+
+        color1.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
+        color1.setSize(30,30);
+        color1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        color1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                col1 = JColorChooser.showDialog(KalahGUIConfig.this,"Seleccione un nuevo color...", Color.white);
+            }
+        });
+
+        color2.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
+        color2.setSize(30,30);
+        color2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        color2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                col2 = JColorChooser.showDialog(KalahGUIConfig.this,"Seleccione un nuevo color...", Color.white);
+
+            }
+        });
+
+        aceptar.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
+        aceptar.setSize(30,30);
+        aceptar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        aceptar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (col1 != null || col2 != null){
+                    KalahGUIGame game = new KalahGUIGame(col1, col2);
+                    game.setResizable(false);
+                    game.setLocationRelativeTo(null);
+                    dispose();
+                }else{
+                    KalahGUIGame game = new KalahGUIGame();
+                    game.setResizable(false);
+                    game.setLocationRelativeTo(null);
+                    dispose();
+                }
+            }
+        });
+
+        panelBotones.setBorder(new CompoundBorder(new EmptyBorder(120,1000,30,1000),
+                new TitledBorder("")));
+        panelBotones.setLayout(new GridLayout(3,1));
+
+        panelBotones.setOpaque(false);
+        panelBotones.add(color1);
+        panelBotones.add(color2);
+        panelBotones.add(aceptar);
+
+        add(titulo);
+        add(panelBotones);
 
     }
     private void prepareActions() {
