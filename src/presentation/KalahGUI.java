@@ -19,6 +19,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 	private int alto = 540;
 	private JMenuBar menu;
 	private JMenu archivoM;
+    private JMenuItem config;
 	private JMenuItem nuevo;
 	private JMenuItem abrir;
 	private JMenuItem salvar;
@@ -48,21 +49,40 @@ public class KalahGUI extends JFrame implements ActionListener {
 		menu = new JMenuBar();
 		setJMenuBar(menu);
 		archivoM = new JMenu("Archivo");
+
+		archivoM.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 		menu.add(archivoM);
+
+		config = new JMenuItem("Configuración");
+		config.addActionListener(this);
+		config.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		menu.add(config);
+
 		nuevo = new JMenuItem("Nuevo");
 		abrir = new JMenuItem("Abrir");
 		salvar = new JMenuItem("Salvar");
 		salir = new JMenuItem("Salir");
+
+		nuevo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		abrir.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		salvar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		nuevo.addActionListener(this);
 		abrir.addActionListener(this);
 		salvar.addActionListener(this);
 		salir.addActionListener(this);
 
+
+
 		archivoM.add(nuevo);
 		archivoM.add(abrir);
 		archivoM.add(salvar);
 		archivoM.add(salir);
+
+
+
 	}
 	private void prepareElementsBeginning(){
 		JLabel titulo = new JLabel("KALAH");
@@ -74,6 +94,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 		juego.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
 		juego.setSize(30,30);
+		juego.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		juego.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -85,13 +106,17 @@ public class KalahGUI extends JFrame implements ActionListener {
 			}
 		});
 
-
 		continuar.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
 		continuar.setSize(30,30);
+		continuar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		continuar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+                KalahGUIConfig game = new KalahGUIConfig();
+                game.setVisible(true);
+                game.setResizable(false);
+                game.setLocationRelativeTo(null);
+                dispose();
 			}
 		});
 
@@ -113,6 +138,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 		salir.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
 		salir.setSize(30,30);
+		salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		salir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -188,7 +214,11 @@ public class KalahGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getSource() == nuevo){
-
+			KalahGUIGame game = new KalahGUIGame();
+			game.setVisible(true);
+			game.setResizable(false);
+			game.setLocationRelativeTo(null);
+			dispose();
 		}
 		if(e.getSource() == abrir){
 			abrirArchivos();
@@ -199,6 +229,13 @@ public class KalahGUI extends JFrame implements ActionListener {
 		if(e.getSource() == salir){
 			close();
 		}
+        if(e.getSource() == config){
+            KalahGUIConfig game = new KalahGUIConfig();
+            game.setVisible(true);
+            game.setResizable(false);
+            game.setLocationRelativeTo(null);
+            dispose();
+        }
 
 
 	}
