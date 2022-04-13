@@ -17,7 +17,6 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     private int alto = 540;
     private int rows = 3;
     private int cols = 6;
-    private int seed = 3;
     private int valor1 = 0;
     private int valor2 = 0;
     private int mov1 = 0;
@@ -51,10 +50,10 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    public KalahGUIGame(Color color1, Color color2, String sem1, String sem2, int numSem){
+    public KalahGUIGame(Color color1, Color color2, String sem1, String sem2, int numSem, int numCas){
         this.setContentPane(fondo);
         setTitle("Kalah");
-        prepareElements(color1, color2, sem1, sem2, numSem);
+        prepareElements(color1, color2, sem1, sem2, numSem, numCas);
         prepareActions();
         setVisible(true);
     }
@@ -66,10 +65,10 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
     }
 
-    private void prepareElements(Color color1, Color color2, String sem1, String sem2, int numSem){
+    private void prepareElements(Color color1, Color color2, String sem1, String sem2, int numSem, int numCas){
         setSize(ancho,alto);
         prepareElementsMenu();
-        prepareElementsBoard(color1, color2, sem1, sem2, numSem);
+        prepareElementsBoard(color1, color2, sem1, sem2, numSem, numCas);
 
     }
 
@@ -136,7 +135,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                         aux.setIcon(new ImageIcon(rojas.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                         aux.setRolloverIcon(new ImageIcon(zoomRojas.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
                     }
-                    aux.setText(seed+"");
+                    aux.setText(cantSemillas1+"");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 15));
                     aux.setForeground(new Color(255, 255, 255));
                     aux.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -183,13 +182,14 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     }
 
 
-    private void prepareElementsBoard(Color color1, Color color2, String colSem1, String colSem2, int numSem){
+    private void prepareElementsBoard(Color color1, Color color2, String colSem1, String colSem2, int numSem, int numCas){
         ImageIcon imagen = new ImageIcon(getClass().getResource("/presentation/bola.png"));
         ImageIcon imagen3 = new ImageIcon(getClass().getResource("/presentation/transparente.png"));
         numSemilla(numSem, 1);
         numSemilla(numSem, 2);
         colorSemilla(colSem1, 1);
         colorSemilla(colSem2, 2);
+        cols = numCas;
         validadorImagenesJug1();
         validadorImagenesJug2();
         //ImageIcon semilla3 = new ImageIcon(getClass().getResource("/presentation/3semillas.png"));
@@ -218,7 +218,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                         aux.setIcon(new ImageIcon(jugador2.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                         aux.setRolloverIcon(new ImageIcon(zoomjugador2.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
                     }
-                    aux.setText(seed+"");
+                    aux.setText(cantSemillas2+"");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 15));
                     aux.setForeground(new Color(255, 255, 255));
                     aux.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -683,7 +683,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                 zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasNegra.png"));
             } else if (semillas2.equals("rojo")) {
                 jugador2 = new ImageIcon(getClass().getResource("/presentation/5semillasRoja.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasRoja.png"));
+                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasRoja.png"));
             } else if (semillas2.equals("rosado")) {
                 jugador2 = new ImageIcon(getClass().getResource("/presentation/5semillasRosada.png"));
                 zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasRosada.png"));

@@ -31,8 +31,10 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
     private String colSem1 = "blue";
     private String colSem2 = "red";
     private int cantSem = 3;
+    private int cantCas = 6;
     private String[] coloresPosibles = {"rojo", "azul", "amarillo", "verde", "negro", "gris", "morado", "café", "rosado"};
     private Integer[] numerosPosibles = {0,1,2,3,4,5,6,7,8};
+    private Integer[] casasPosibles = {6,7,8,9,10,11,12};
 
     public KalahGUIConfig(){
         this.setContentPane(fondo);
@@ -86,6 +88,7 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         Button colSemillas1 = new Button("Cambiar color de las semillas del jugador 1");
         Button colSemillas2 = new Button("Cambiar color de las semillas del jugador 2");
         Button cantSemillas = new Button("Cambiar el número de semillas para los jugadores");
+        Button cantCasas = new Button("Cambiar el número de casas para los jugadores");
         Button aceptar = new Button("Aceptar");
 
         JLabel titulo = new JLabel("Opciones de configuración");
@@ -139,8 +142,8 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 colSem2 = (String) JOptionPane.showInputDialog(
                         null,
-                        "Escoge el nuevo color de las semillas para el jugador 1",
-                        "Cambiar color semillas para el jugador 1",
+                        "Escoge el nuevo color de las semillas para el jugador 2",
+                        "Cambiar color semillas para el jugador 2",
                         JOptionPane.QUESTION_MESSAGE,
                         null,
                         coloresPosibles,
@@ -156,8 +159,8 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 Integer canSemillas = (Integer) JOptionPane.showInputDialog(
                         null,
-                        "Escoge el nuevo color de las semillas para el jugador 1",
-                        "Cambiar color semillas para el jugador 1",
+                        "Escoge la nueva cantidad de semillas",
+                        "Cambiar número de semillas",
                         JOptionPane.QUESTION_MESSAGE,
                         null,
                         numerosPosibles,
@@ -166,16 +169,33 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
             }
         });
 
+        cantCasas.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
+        cantCasas.setSize(30,30);
+        cantCasas.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cantCasas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Integer canCasas = (Integer) JOptionPane.showInputDialog(
+                        null,
+                        "Escoge la nueva cantidad de casas",
+                        "Cambiar número de casas",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        casasPosibles,
+                        casasPosibles[0]);
+                cantCas = canCasas.intValue();
+            }
+        });
+
         aceptar.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
         aceptar.setSize(30,30);
         aceptar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        colSem1 = "black";
         aceptar.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (col1 != null || col2 != null || !colSem1.equals("blue") || !colSem2.equals("red") || cantSem != 3) {
-                    KalahGUIGame game = new KalahGUIGame(col1, col2, colSem1, colSem2, cantSem);
+                if (col1 != null || col2 != null || !colSem1.equals("blue") || !colSem2.equals("red") || cantSem != 3 || cantCas != 6) {
+                    KalahGUIGame game = new KalahGUIGame(col1, col2, colSem1, colSem2, cantSem, cantCas);
                     game.setResizable(false);
                     game.setLocationRelativeTo(null);
                     dispose();
@@ -188,9 +208,9 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
             }
         });
 
-        panelBotones.setBorder(new CompoundBorder(new EmptyBorder(120,1000,30,1000),
+        panelBotones.setBorder(new CompoundBorder(new EmptyBorder(80,1000,30,1000),
                 new TitledBorder("")));
-        panelBotones.setLayout(new GridLayout(3,1));
+        panelBotones.setLayout(new GridLayout(7,1));
 
         panelBotones.setOpaque(false);
         panelBotones.add(color1);
@@ -198,12 +218,14 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         panelBotones.add(colSemillas1);
         panelBotones.add(colSemillas2);
         panelBotones.add(cantSemillas);
+        panelBotones.add(cantCasas);
         panelBotones.add(aceptar);
 
         add(titulo);
         add(panelBotones);
 
     }
+
     private void prepareActions() {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
