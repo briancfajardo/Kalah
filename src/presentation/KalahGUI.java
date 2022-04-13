@@ -49,25 +49,38 @@ public class KalahGUI extends JFrame implements ActionListener {
 		menu = new JMenuBar();
 		setJMenuBar(menu);
 		archivoM = new JMenu("Archivo");
+
+		archivoM.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 		menu.add(archivoM);
+
+		config = new JMenuItem("Configuración");
+		config.addActionListener(this);
+		config.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		menu.add(config);
+
 		nuevo = new JMenuItem("Nuevo");
 		abrir = new JMenuItem("Abrir");
 		salvar = new JMenuItem("Salvar");
 		salir = new JMenuItem("Salir");
+
+		nuevo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		abrir.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		salvar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		nuevo.addActionListener(this);
 		abrir.addActionListener(this);
 		salvar.addActionListener(this);
 		salir.addActionListener(this);
 
-        config = new JMenuItem("Configuración");
-        config.addActionListener(this);
+
 
 		archivoM.add(nuevo);
 		archivoM.add(abrir);
 		archivoM.add(salvar);
 		archivoM.add(salir);
-        menu.add(config);
+
 
 
 	}
@@ -81,6 +94,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 		juego.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
 		juego.setSize(30,30);
+		juego.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		juego.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -94,6 +108,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 		continuar.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
 		continuar.setSize(30,30);
+		continuar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		continuar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -123,6 +138,7 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 		salir.setFont(new Font("Serif", Font.CENTER_BASELINE, 20));
 		salir.setSize(30,30);
+		salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		salir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

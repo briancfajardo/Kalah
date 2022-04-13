@@ -38,11 +38,19 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         menu = new JMenuBar();
         setJMenuBar(menu);
         archivoM = new JMenu("Archivo");
+
+        archivoM.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         menu.add(archivoM);
         nuevo = new JMenuItem("Nuevo");
         abrir = new JMenuItem("Abrir");
         salvar = new JMenuItem("Salvar");
         salir = new JMenuItem("Salir");
+
+        nuevo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        abrir.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        salvar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         nuevo.addActionListener(this);
         abrir.addActionListener(this);
@@ -53,6 +61,8 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         archivoM.add(abrir);
         archivoM.add(salvar);
         archivoM.add(salir);
+
+
     }
     private void prepareActions() {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

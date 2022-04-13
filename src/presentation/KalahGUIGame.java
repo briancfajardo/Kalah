@@ -52,11 +52,19 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         menu = new JMenuBar();
         setJMenuBar(menu);
         archivoM = new JMenu("Archivo");
+
+        archivoM.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         menu.add(archivoM);
         nuevo = new JMenuItem("Nuevo");
         abrir = new JMenuItem("Abrir");
         salvar = new JMenuItem("Salvar");
         salir = new JMenuItem("Salir");
+
+        nuevo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        abrir.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        salvar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         nuevo.addActionListener(this);
         abrir.addActionListener(this);
@@ -65,6 +73,8 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
         config = new JMenuItem("Configuración");
         config.addActionListener(this);
+
+        config.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         archivoM.add(nuevo);
         archivoM.add(abrir);
@@ -109,6 +119,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     aux.setVerticalAlignment(SwingConstants.CENTER);
                     aux.setHorizontalAlignment(SwingConstants.LEFT);
                     aux.setBorderPainted(false);
+                    aux.setCursor(new Cursor(Cursor.HAND_CURSOR));
                     cont += 1;
                     add(aux);
                 }else if(j == 0 || j == cols-1){
