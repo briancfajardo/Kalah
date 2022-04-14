@@ -40,31 +40,40 @@ public class kalah {
     public void vaciarCasa(int x, int y){
         //int x corresponde al jugador
         int moverSemillas = semillas.get(x).get(y);
+        int cont = 1;
         if (x == 0){
             jugador1.set(y, 0);
         }else{
             jugador2.set(y, 0);
         }
 
-        for (int s = 1; s == moverSemillas; s++){
-            if (x == 0 && y - s >= 0){
-                jugador1.set(y-s, jugador1.get(y-s) + 1);
-            }else if (x == 0 && y - s == -1){
-                contenedores.set(0, contenedores.get(0) + 1);
-            }else if (x == 0){
-                    x = 2;
-                    y = 0;
-                    jugador2.set(0, jugador2.get(0) + 1);
-            }else if (x == 2 && y + s < cols){
-                jugador2.set(y + s, jugador2.get(y + s) + 1);
-            }else if (x == 2 && y + s == cols) {
-                contenedores.set(cols - 1, contenedores.get(cols - 1) + 1);
-            }else if (x == 2 && y + s > cols){
-                x = 0;
-                y = cols - 1;
-                jugador1.set(cols - 1, jugador2.get(cols - 1) + 1);
+        for (int s = 1; s <= moverSemillas; s++) {
+            if (x == 0) {
+                if (y - s > -1) {
+                    jugador1.set(y - s, jugador1.get(y - s) + 1);
+                } else if (y - s == -1) {
+                    contenedores.set(0, contenedores.get(0) + 1);
+                } else {
+                    jugador2.set(cont-1, jugador2.get(cont-1) + 1);
+                    cont += 1;
+                }
+            } else if (x == 2) {
+                if (y + s < cols) {
+                    jugador2.set(y + s, jugador2.get(y + s) + 1);
+                } else if (y + s == cols) {
+                    contenedores.set(cols - 1, contenedores.get(cols - 1) + 1);
+                } else {
+                    jugador1.set(cols-cont, jugador1.get(cols-cont) + 1);
+                    cont += 1;
+                }
             }
         }
+        semillas.remove(0);
+        semillas.add(0, jugador1);
+        semillas.remove(1);
+        semillas.add(1, contenedores);
+        semillas.remove(2);
+        semillas.add(2, jugador2);
     }
 
     public void imprimir(){
@@ -82,8 +91,8 @@ public class kalah {
     }
 
     public static void main(String[] arg){
-        kalah gui = new kalah(6,3);
-        gui.vaciarCasa(0,5);
+        kalah gui = new kalah(7,6);
+        gui.vaciarCasa(0,1);
         gui.imprimir();
     }
 
