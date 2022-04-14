@@ -43,8 +43,10 @@ public class kalah {
         int cont = 1;
         if (x == 0){
             jugador1.set(y, 0);
+            movimientosJugador1 += 1;
         }else{
             jugador2.set(y, 0);
+            movimientosJugador2 += 1;
         }
 
         for (int s = 1; s <= moverSemillas; s++) {

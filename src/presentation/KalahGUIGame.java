@@ -187,8 +187,6 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
 
     private void prepareElementsBoard(Color color1, Color color2, String colSem1, String colSem2, int numSem, int numCas){
-        validadorImagenesJug1();
-        validadorImagenesJug2();
 
         this.color1 = color1;
         this.color2 = color2;
