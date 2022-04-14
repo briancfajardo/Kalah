@@ -27,7 +27,8 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     private JMenuItem abrir;
     private JMenuItem salvar;
     private JMenuItem salir;
-    private JMenuItem config;
+    private JButton config;
+    private JButton reiniciar;
     private JFileChooser archivos;
     private File partida;
     private Fondo fondo = new Fondo();
@@ -36,10 +37,12 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     private ImageIcon zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasAzul.png"));
     private ImageIcon jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasRoja.png"));
     private ImageIcon zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasRoja.png"));
+    private Color color1;
+    private Color color2;
     private String semillas1 = "azul";
     private String semillas2 = "rojo";
-    private int cantSemillas1 = 3;
-    private int cantSemillas2 = 3;
+    private int cantSemillas1 = 5;
+    private int cantSemillas2 = 5;
 
 
     public KalahGUIGame(){
@@ -76,7 +79,6 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         menu = new JMenuBar();
         setJMenuBar(menu);
         archivoM = new JMenu("Archivo");
-
         archivoM.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         menu.add(archivoM);
@@ -95,16 +97,24 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         salvar.addActionListener(this);
         salir.addActionListener(this);
 
-        config = new JMenuItem("Configuración");
-        config.addActionListener(this);
-
-        config.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
         archivoM.add(nuevo);
         archivoM.add(abrir);
         archivoM.add(salvar);
         archivoM.add(salir);
-        menu.add(config);
+
+        JPanel nuevoPanel = new JPanel();
+
+        config = new JButton("Configuración");
+        config.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        config.addActionListener(this);
+
+        reiniciar = new JButton("Reiniciar");
+        reiniciar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        reiniciar.addActionListener(this);
+
+        nuevoPanel.add(config);
+        nuevoPanel.add(reiniciar);
+        menu.add(nuevoPanel);
 
 
     }
@@ -190,6 +200,10 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         colorSemilla(colSem1, 1);
         colorSemilla(colSem2, 2);
         cols = numCas;
+
+        this.color1 = color1;
+        this.color2 = color2;
+
         validadorImagenesJug1();
         validadorImagenesJug2();
         //ImageIcon semilla3 = new ImageIcon(getClass().getResource("/presentation/3semillas.png"));
@@ -218,7 +232,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                         aux.setIcon(new ImageIcon(jugador2.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                         aux.setRolloverIcon(new ImageIcon(zoomjugador2.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
                     }
-                    aux.setText(cantSemillas2+"");
+                    aux.setText(cantSemillas1+"");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 15));
                     aux.setForeground(new Color(255, 255, 255));
                     aux.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -411,8 +425,8 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                 jugador1 = new ImageIcon(getClass().getResource("/presentation/4semillasRosado.png"));
                 zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasRosada.png"));
             } else if (semillas1.equals("verde")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/2semillasVerde.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasVerde.png"));
+                jugador1 = new ImageIcon(getClass().getResource("/presentation/4semillasVerde.png"));
+                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasVerde.png"));
             }
 
         }else if (cantSemillas1 == 5) {
@@ -436,7 +450,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                 zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasNegra.png"));
             } else if (semillas1.equals("rojo")) {
                 jugador1 = new ImageIcon(getClass().getResource("/presentation/5semillasRoja.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasRoja.png"));
+                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasRoja.png"));
             } else if (semillas1.equals("rosado")) {
                 jugador1 = new ImageIcon(getClass().getResource("/presentation/5semillasRosada.png"));
                 zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasRosada.png"));
@@ -658,8 +672,8 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                 jugador2 = new ImageIcon(getClass().getResource("/presentation/4semillasRosado.png"));
                 zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasRosada.png"));
             } else if (semillas2.equals("verde")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/2semillasVerde.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasVerde.png"));
+                jugador2 = new ImageIcon(getClass().getResource("/presentation/4semillasVerde.png"));
+                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasVerde.png"));
             }
 
         }else if (cantSemillas2 == 5) {
@@ -849,6 +863,13 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }
         if(e.getSource() == config){
             KalahGUIConfig game = new KalahGUIConfig();
+            game.setVisible(true);
+            game.setResizable(false);
+            game.setLocationRelativeTo(null);
+            dispose();
+        }
+        if(e.getSource() == reiniciar){
+            KalahGUIGame game = new KalahGUIGame(color1, color2, semillas1, semillas2, cantSemillas1, cols);
             game.setVisible(true);
             game.setResizable(false);
             game.setLocationRelativeTo(null);
