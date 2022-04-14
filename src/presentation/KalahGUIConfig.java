@@ -194,8 +194,7 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (col1 != null || col2 != null || !colSem1.equals("blue") || !colSem2.equals("red") || cantSem != 3 || cantCas != 6) {
-                    System.out.println(cantSem);
+                if (col1 != null || col2 != null || cantSem != 3 || !colSem1.equals("blue") || !colSem2.equals("red") || cantCas != 6) {
                     KalahGUIGame game = new KalahGUIGame(col1, col2, colSem1, colSem2, cantSem, cantCas);
                     game.setResizable(false);
                     game.setLocationRelativeTo(null);

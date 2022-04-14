@@ -27,12 +27,14 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     private JMenuItem abrir;
     private JMenuItem salvar;
     private JMenuItem salir;
-    private JButton config;
-    private JButton reiniciar;
+    private Button config;
+    private Button reiniciar;
     private JFileChooser archivos;
     private File partida;
     private Fondo fondo = new Fondo();
 
+    private ImageIcon imagen = new ImageIcon(getClass().getResource("/presentation/bola.png"));
+    private ImageIcon imagen3 = new ImageIcon(getClass().getResource("/presentation/transparente.png"));
     private ImageIcon jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasAzul.png"));
     private ImageIcon zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasAzul.png"));
     private ImageIcon jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasRoja.png"));
@@ -41,8 +43,8 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     private Color color2;
     private String semillas1 = "azul";
     private String semillas2 = "rojo";
-    private int cantSemillas1 = 5;
-    private int cantSemillas2 = 5;
+    private int cantSemillas1 = 3;
+    private int cantSemillas2 = 3;
 
 
     public KalahGUIGame(){
@@ -104,11 +106,11 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
         JPanel nuevoPanel = new JPanel();
 
-        config = new JButton("Configuración");
+        config = new Button("Configuración");
         config.setCursor(new Cursor(Cursor.HAND_CURSOR));
         config.addActionListener(this);
 
-        reiniciar = new JButton("Reiniciar");
+        reiniciar = new Button("Reiniciar");
         reiniciar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         reiniciar.addActionListener(this);
 
@@ -121,14 +123,6 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     //Carga de imagenes
 
     private void prepareElementsBoard(){
-        ImageIcon imagen = new ImageIcon(getClass().getResource("/presentation/bola.png"));
-        ImageIcon imagen3 = new ImageIcon(getClass().getResource("/presentation/transparente.png"));
-        //ImageIcon semilla3 = new ImageIcon(getClass().getResource("/presentation/3semillas.png"));
-        ImageIcon azules = new ImageIcon(getClass().getResource("/presentation/3semillasAzul.png"));
-        ImageIcon zoomAzules = new ImageIcon(getClass().getResource("/presentation/zoom3semillasAzul.png"));
-        ImageIcon rojas = new ImageIcon(getClass().getResource("/presentation/3semillasRoja.png"));
-        ImageIcon zoomRojas = new ImageIcon(getClass().getResource("/presentation/zoom3semillasRoja.png"));
-
         setLayout(new GridLayout(rows,cols));
         int cont = 0;
         for(int i = 0; i < rows; i++){
@@ -139,11 +133,11 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     aux.setOpaque(true);
                     aux.setContentAreaFilled(false);
                     if (i == 0) {
-                        aux.setIcon(new ImageIcon(azules.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
-                        aux.setRolloverIcon(new ImageIcon(zoomAzules.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
+                        aux.setIcon(new ImageIcon(jugador1.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
+                        aux.setRolloverIcon(new ImageIcon(zoomjugador1.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
                     }else{
-                        aux.setIcon(new ImageIcon(rojas.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
-                        aux.setRolloverIcon(new ImageIcon(zoomRojas.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
+                        aux.setIcon(new ImageIcon(jugador2.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
+                        aux.setRolloverIcon(new ImageIcon(zoomjugador2.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
                     }
                     aux.setText(cantSemillas1+"");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 15));
@@ -193,16 +187,17 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
 
     private void prepareElementsBoard(Color color1, Color color2, String colSem1, String colSem2, int numSem, int numCas){
-        ImageIcon imagen = new ImageIcon(getClass().getResource("/presentation/bola.png"));
-        ImageIcon imagen3 = new ImageIcon(getClass().getResource("/presentation/transparente.png"));
+        validadorImagenesJug1();
+        validadorImagenesJug2();
+
+        this.color1 = color1;
+        this.color2 = color2;
         numSemilla(numSem, 1);
         numSemilla(numSem, 2);
         colorSemilla(colSem1, 1);
         colorSemilla(colSem2, 2);
         cols = numCas;
 
-        this.color1 = color1;
-        this.color2 = color2;
 
         validadorImagenesJug1();
         validadorImagenesJug2();
