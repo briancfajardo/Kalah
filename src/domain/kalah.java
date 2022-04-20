@@ -78,6 +78,18 @@ public class kalah {
         semillas.add(2, jugador2);
     }
 
+    public void robarSemillas(){
+
+    }
+
+    public void cambioTurno(){
+
+    }
+
+    public void finalizaJuego(){
+
+    }
+
     public void imprimir(){
         for (Integer m : jugador1){
             System.out.println(m + "");
