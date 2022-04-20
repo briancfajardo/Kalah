@@ -187,7 +187,6 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
 
     private void prepareElementsBoard(Color color1, Color color2, String colSem1, String colSem2, int numSem, int numCas){
-
         this.color1 = color1;
         this.color2 = color2;
         numSemilla(numSem, 1);
@@ -277,9 +276,9 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     public void colorSemilla(String color, int jugador){
         //Colores posibles: azul, cafe, amarillo, gris, morado, negro, rosado, verde, rojo
         if (jugador == 1){
-            semillas1 = color;
+            this.semillas1 = color;
         }else if (jugador == 2){
-            semillas2 = color;
+            this.semillas2 = color;
         }else{
             JOptionPane.showMessageDialog(this,"El jugador no existe\n" ,"colorSemilla",
                     1,null);

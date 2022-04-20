@@ -28,8 +28,8 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
     private KalahGUIConfig.Fondo fondo = new KalahGUIConfig.Fondo();
     private Color col1 = null;
     private Color col2 = null;
-    private String colSem1 = "blue";
-    private String colSem2 = "red";
+    private String colSem1 = "azul";
+    private String colSem2 = "rojo";
     private int cantSem = 3;
     private int cantCas = 6;
     private String[] coloresPosibles = {"rojo", "azul", "amarillo", "verde", "negro", "gris", "morado", "café", "rosado"};
@@ -76,7 +76,6 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         archivoM.add(abrir);
         archivoM.add(salvar);
         archivoM.add(salir);
-
 
     }
 
@@ -194,17 +193,10 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (col1 != null || col2 != null || cantSem != 3 || !colSem1.equals("blue") || !colSem2.equals("red") || cantCas != 6) {
-                    KalahGUIGame game = new KalahGUIGame(col1, col2, colSem1, colSem2, cantSem, cantCas);
-                    game.setResizable(false);
-                    game.setLocationRelativeTo(null);
-                    dispose();
-                }else{
-                    KalahGUIGame game = new KalahGUIGame();
-                    game.setResizable(false);
-                    game.setLocationRelativeTo(null);
-                    dispose();
-                }
+                KalahGUIGame game = new KalahGUIGame(col1, col2, colSem1, colSem2, cantSem, cantCas);
+                game.setResizable(false);
+                game.setLocationRelativeTo(null);
+                dispose();
             }
         });
 
