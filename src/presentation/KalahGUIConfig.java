@@ -122,7 +122,7 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         colSemillas1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                colSem1 = (String) JOptionPane.showInputDialog(
+                String aux = (String) JOptionPane.showInputDialog(
                         null,
                         "Escoge el nuevo color de las semillas para el jugador 1",
                         "Cambiar color semillas para el jugador 1",
@@ -130,6 +130,7 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
                         null,
                         coloresPosibles,
                         coloresPosibles[0]);
+                if (aux != null){ colSem1 = aux;}
             }
         });
 
@@ -139,7 +140,7 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         colSemillas2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                colSem2 = (String) JOptionPane.showInputDialog(
+                String aux = (String) JOptionPane.showInputDialog(
                         null,
                         "Escoge el nuevo color de las semillas para el jugador 2",
                         "Cambiar color semillas para el jugador 2",
@@ -147,6 +148,7 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
                         null,
                         coloresPosibles,
                         coloresPosibles[0]);
+                if (aux != null){ colSem2 = aux;}
             }
         });
 
@@ -164,7 +166,7 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
                         null,
                         numerosPosibles,
                         numerosPosibles[0]);
-                cantSem = canSemillas.intValue();
+                if (canSemillas != null){ cantSem = canSemillas.intValue();}
             }
         });
 
@@ -182,7 +184,7 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
                         null,
                         casasPosibles,
                         casasPosibles[0]);
-                cantCas = canCasas.intValue();
+                if (canCasas != null){ cantCas = canCasas.intValue();}
             }
         });
 
