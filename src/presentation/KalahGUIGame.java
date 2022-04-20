@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import domain.kalah;
 
 public class KalahGUIGame extends JFrame implements ActionListener {
 
@@ -46,8 +47,11 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     private int cantSemillas1 = 3;
     private int cantSemillas2 = 3;
 
+    private kalah kalah;
+
 
     public KalahGUIGame(){
+        kalah = new kalah(cols, cantSemillas1);
         this.setContentPane(fondo);
         setTitle("Kalah");
         prepareElements();
@@ -56,11 +60,13 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     }
 
     public KalahGUIGame(Color color1, Color color2, String sem1, String sem2, int numSem, int numCas){
+        kalah = new kalah(numCas, numSem);
         this.setContentPane(fondo);
         setTitle("Kalah");
         prepareElements(color1, color2, sem1, sem2, numSem, numCas);
         prepareActions();
         setVisible(true);
+
     }
 
     private void prepareElements(){
@@ -139,7 +145,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                         aux.setIcon(new ImageIcon(jugador2.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                         aux.setRolloverIcon(new ImageIcon(zoomjugador2.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
                     }
-                    aux.setText(cantSemillas1+"");
+                    aux.setText(kalah.getSeeds(i,j)+"");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 15));
                     aux.setForeground(new Color(255, 255, 255));
                     aux.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -155,13 +161,13 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     add(aux);
                 }else if(j == 1) {
                     JLabel aux = new JLabel();
-                    aux.setText("<html><center>Valor en tu almacen: <br>" + valor1 + "</center><html>");
+                    aux.setText("<html><center>Valor en tu almacen: <br>" + kalah.getContJ1() + "</center><html>");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 20*6/cols));
                     aux.setForeground(new Color(255, 255, 255));
                     add(aux);
                 }else if(j == cols-2) {
                     JLabel aux = new JLabel();
-                    aux.setText("<html><center>Valor en tu almacen: <br>" + valor2 + "</center><html>");
+                    aux.setText("<html><center>Valor en tu almacen: <br>" + kalah.getContJ2() + "</center><html>");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 20*6/cols));
                     aux.setForeground(new Color(255, 255, 255));
                     add(aux);
@@ -243,13 +249,13 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     add(aux);
                 }else if(j == 1) {
                     JLabel aux = new JLabel();
-                    aux.setText("<html><center>Valor en tu almacen: <br>" + valor1 + "</center><html>");
+                    aux.setText("<html><center>Valor en tu almacen: <br>" + kalah.getContJ1() + "</center><html>");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 20*6/cols));
                     aux.setForeground(new Color(255, 255, 255));
                     add(aux);
                 }else if(j == cols-2) {
                     JLabel aux = new JLabel();
-                    aux.setText("<html><center>Valor en tu almacen: <br>" + valor2 + "</center><html>");
+                    aux.setText("<html><center>Valor en tu almacen: <br>" + kalah.getContJ2() + "</center><html>");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 20*6/cols));
                     aux.setForeground(new Color(255, 255, 255));
                     add(aux);

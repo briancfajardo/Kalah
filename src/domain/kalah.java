@@ -87,9 +87,29 @@ public class kalah {
     }
 
     public void finalizaJuego(){
-
+        int totalJ1 = semillasJugador(jugador1);
+        int totalJ2 = semillasJugador(jugador2);
+        if (totalJ1 == 0 && ultY == 0 && ultX == 1){
+            contenedores.set(0,contenedores.get(0)+ totalJ2);
+            jugador2.replaceAll(ignored -> 0);
+        }else if (totalJ2 == 0 && ultY == cols-1 && ultX == 1){
+            contenedores.set(cols-1,contenedores.get(cols-1) + totalJ1);
+            jugador1.replaceAll(ignored -> 0);
+        }else if (totalJ1 == 0 && ultY != 0 && ultX != 1){
+            contenedores.set(cols-1,contenedores.get(cols-1)+ totalJ2);
+            jugador2.replaceAll(ignored -> 0);
+        }else if (totalJ2 == 0 && ultY != cols-1 && ultX != 1){
+            contenedores.set(0,contenedores.get(0) + totalJ1);
+            jugador1.replaceAll(ignored -> 0);
+        }
     }
-
+    private  int semillasJugador(ArrayList<Integer> jugador){
+        int suma = 0;
+        for (Integer i : jugador){
+            suma += i.intValue();
+        }
+        return suma;
+    }
     public void imprimir(){
         for (Integer m : jugador1){
             System.out.println(m + "");
