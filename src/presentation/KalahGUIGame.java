@@ -43,7 +43,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     private Color color1;
     private Color color2;
     private String semillas1 = "azul";
-    private String semillas2 = "rojo";
+    private String semillas2 = "roja";
     private int cantSemillas1 = 3;
     private int cantSemillas2 = 3;
 
@@ -60,13 +60,21 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     }
 
     public KalahGUIGame(Color color1, Color color2, String sem1, String sem2, int numSem, int numCas){
-        kalah = new kalah(numCas, numSem);
+        kalah = new kalah(cols, cantSemillas1);
         this.setContentPane(fondo);
         setTitle("Kalah");
         prepareElements(color1, color2, sem1, sem2, numSem, numCas);
         prepareActions();
         setVisible(true);
+    }
 
+    public KalahGUIGame(Color color1, Color color2, String sem1, String sem2, int numSem, int numCas,kalah k){
+        this.kalah = k;
+        this.setContentPane(fondo);
+        setTitle("Kalah");
+        prepareElements(color1, color2, sem1, sem2, numSem, numCas);
+        prepareActions();
+        setVisible(true);
     }
 
     private void prepareElements(){
@@ -130,19 +138,20 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
     private void prepareElementsBoard(){
         setLayout(new GridLayout(rows,cols));
-        int cont = 0;
         for(int i = 0; i < rows; i++){
             for (int j = 0; j < cols; j++){
 
                 if (i != 1) {
                     JButton aux = new JButton();
+                    EventosCasitas evento = new EventosCasitas();
+                    evento.setCords(i,j);
                     aux.setOpaque(true);
                     aux.setContentAreaFilled(false);
                     if (i == 0) {
-                        aux.setIcon(new ImageIcon(jugador1.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
+                        aux.setIcon(new ImageIcon(getImage(kalah.getSeeds(i,j), semillas1).getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                         aux.setRolloverIcon(new ImageIcon(zoomjugador1.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
                     }else{
-                        aux.setIcon(new ImageIcon(jugador2.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
+                        aux.setIcon(new ImageIcon(getImage(kalah.getSeeds(i,j), semillas2).getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                         aux.setRolloverIcon(new ImageIcon(zoomjugador2.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
                     }
                     aux.setText(kalah.getSeeds(i,j)+"");
@@ -154,7 +163,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     aux.setHorizontalAlignment(SwingConstants.LEFT);
                     aux.setBorderPainted(false);
                     aux.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                    cont += 1;
+                    aux.addActionListener(evento);
                     add(aux);
                 }else if(j == 0 || j == cols-1){
                     JLabel aux = new JLabel(new ImageIcon(imagen.getImage().getScaledInstance((ancho*8/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
@@ -201,18 +210,16 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         colorSemilla(colSem2, 2);
         cols = numCas;
 
-
-        validadorImagenesJug1();
-        validadorImagenesJug2();
         //ImageIcon semilla3 = new ImageIcon(getClass().getResource("/presentation/3semillas.png"));
 
         setLayout(new GridLayout(rows,cols));
-        int cont = 0;
         for(int i = 0; i < rows; i++){
             for (int j = 0; j < cols; j++){
 
                 if (i != 1) {
                     JButton aux = new JButton();
+                    EventosCasitas evento = new EventosCasitas();
+                    evento.setCords(i,j);
                     aux.setOpaque(true);
                     aux.setContentAreaFilled(false);
                     if (i == 0) {
@@ -220,17 +227,19 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                             aux.setContentAreaFilled(true);
                             aux.setBackground(color1);
                         }
-                        aux.setIcon(new ImageIcon(jugador1.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
+                        validadorImagenesJug1(kalah.getSeeds(i,j));
+                        aux.setIcon(new ImageIcon(getImage(kalah.getSeeds(i,j), semillas1).getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                         aux.setRolloverIcon(new ImageIcon(zoomjugador1.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
                     }else{
                         if (color2 != null ){
                             aux.setContentAreaFilled(true);
                             aux.setBackground(color2);
                         }
-                        aux.setIcon(new ImageIcon(jugador2.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
+                        validadorImagenesJug2(kalah.getSeeds(i,j));
+                        aux.setIcon(new ImageIcon(getImage(kalah.getSeeds(i,j), semillas2).getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                         aux.setRolloverIcon(new ImageIcon(zoomjugador2.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
                     }
-                    aux.setText(cantSemillas1+"");
+                    aux.setText(kalah.getSeeds(i,j)+"");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 15));
                     aux.setForeground(new Color(255, 255, 255));
                     aux.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -239,7 +248,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     aux.setHorizontalAlignment(SwingConstants.LEFT);
                     aux.setBorderPainted(false);
                     aux.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                    cont += 1;
+                    aux.addActionListener(evento);
                     add(aux);
                 }else if(j == 0){
                     JLabel aux = new JLabel(new ImageIcon(imagen.getImage().getScaledInstance((ancho*8/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
@@ -291,23 +300,194 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }
     }
 
-    public void numSemilla(int cantidad, int jugador){
+    public void numSemilla(int cantidad, int jugador) {
         //Numeros posibles: 0,1,2,3,...
-        if (jugador == 1){
+        if (jugador == 1) {
             cantSemillas1 = cantidad;
-        }else if (jugador == 2){
+        } else if (jugador == 2) {
             cantSemillas2 = cantidad;
-        }else{
-            JOptionPane.showMessageDialog(this,"El jugador no existe\n" ,"colorSemilla",
-                    1,null);
+        } else {
+            JOptionPane.showMessageDialog(this, "El jugador no existe\n", "colorSemilla",
+                    1, null);
         }
     }
 
-    public void validadorImagenesJug1(){
+    public ImageIcon validadorImagenesJug(int cantSemillas1){
+        if (cantSemillas1 == 0){
+            return new ImageIcon(getClass().getResource("/presentation/bola.png"));
+        }else if (cantSemillas1 == 1){
+            if (semillas1.equals("café")){
+                return new ImageIcon(getClass().getResource("/presentation/1semilla.png"));
+            }else if (semillas1.equals("amarillo")) {
+                return new ImageIcon(getClass().getResource("/presentation/1semillaAmarilla.png"));
+            }else if (semillas1.equals("azul")) {
+                return new ImageIcon(getClass().getResource("/presentation/1semillaAzul.png"));
+            }else if (semillas1.equals("gris")) {
+                return new ImageIcon(getClass().getResource("/presentation/1semillaGris.png"));
+            }else if (semillas1.equals("morado")) {
+                return new ImageIcon(getClass().getResource("/presentation/1semillaMorada.png"));
+            }else if (semillas1.equals("negro")) {
+                return new ImageIcon(getClass().getResource("/presentation/1semillaNegra.png"));
+            }else if (semillas1.equals("rojo")) {
+                return new ImageIcon(getClass().getResource("/presentation/1semillaRoja.png"));
+            }else if (semillas1.equals("rosado")) {
+                return new ImageIcon(getClass().getResource("/presentation/1semillaRosada.png"));
+            }else if (semillas1.equals("verde")) {
+                return new ImageIcon(getClass().getResource("/presentation/1semillaVerde.png"));
+            }
+
+        }else if (cantSemillas1 == 2) {
+            if (semillas1.equals("café")) {
+                return new ImageIcon(getClass().getResource("/presentation/2semillas.png"));
+            } else if (semillas1.equals("amarillo")) {
+                return new ImageIcon(getClass().getResource("/presentation/2semillasAmarilla.png"));
+            } else if (semillas1.equals("azul")) {
+                return new ImageIcon(getClass().getResource("/presentation/2semillasAzul.png"));
+            } else if (semillas1.equals("gris")) {
+                return new ImageIcon(getClass().getResource("/presentation/2semillasGris.png"));
+            } else if (semillas1.equals("morado")) {
+                return new ImageIcon(getClass().getResource("/presentation/2semillasMorada.png"));
+            } else if (semillas1.equals("negro")) {
+                return new ImageIcon(getClass().getResource("/presentation/2semillasNegra.png"));
+            } else if (semillas1.equals("rojo")) {
+                return new ImageIcon(getClass().getResource("/presentation/2semillasRoja.png"));
+            } else if (semillas1.equals("rosado")) {
+                return new ImageIcon(getClass().getResource("/presentation/2semillasRosada.png"));
+            } else if (semillas1.equals("verde")) {
+                return new ImageIcon(getClass().getResource("/presentation/2semillasVerde.png"));
+            }
+        }else if (cantSemillas1 == 3) {
+            if (semillas1.equals("café")) {
+                return new ImageIcon(getClass().getResource("/presentation/3semillas.png"));
+            } else if (semillas1.equals("amarillo")) {
+                return new ImageIcon(getClass().getResource("/presentation/3semillasAmarilla.png"));
+            } else if (semillas1.equals("azul")) {
+                return new ImageIcon(getClass().getResource("/presentation/3semillasAzul.png"));
+            } else if (semillas1.equals("gris")) {
+                return new ImageIcon(getClass().getResource("/presentation/3semillasGris.png"));
+            } else if (semillas1.equals("morado")) {
+                return new ImageIcon(getClass().getResource("/presentation/3semillasMorada.png"));
+            } else if (semillas1.equals("negro")) {
+                return new ImageIcon(getClass().getResource("/presentation/3semillasNegra.png"));
+            } else if (semillas1.equals("rojo")) {
+                return new ImageIcon(getClass().getResource("/presentation/3semillasRoja.png"));
+            } else if (semillas1.equals("rosado")) {
+                return new ImageIcon(getClass().getResource("/presentation/3semillasRosado.png"));
+            } else if (semillas1.equals("verde")) {
+                return new ImageIcon(getClass().getResource("/presentation/3semillasVerde.png"));
+            }
+
+        }else if (cantSemillas1 == 4) {
+            if (semillas1.equals("café")) {
+                return new ImageIcon(getClass().getResource("/presentation/4semillas.png"));
+            } else if (semillas1.equals("amarillo")) {
+                return new ImageIcon(getClass().getResource("/presentation/4semillasAmarilla.png"));
+            } else if (semillas1.equals("azul")) {
+                return new ImageIcon(getClass().getResource("/presentation/4semillasAzul.png"));
+            } else if (semillas1.equals("gris")) {
+                return new ImageIcon(getClass().getResource("/presentation/4semillasGris.png"));
+            } else if (semillas1.equals("morado")) {
+                return new ImageIcon(getClass().getResource("/presentation/4semillasMorada.png"));
+            } else if (semillas1.equals("negro")) {
+                return new ImageIcon(getClass().getResource("/presentation/4semillasNegra.png"));
+            } else if (semillas1.equals("rojo")) {
+                return new ImageIcon(getClass().getResource("/presentation/4semillasRoja.png"));
+            } else if (semillas1.equals("rosado")) {
+                return new ImageIcon(getClass().getResource("/presentation/4semillasRosado.png"));
+            } else if (semillas1.equals("verde")) {
+                return new ImageIcon(getClass().getResource("/presentation/4semillasVerde.png"));
+            }
+
+        }else if (cantSemillas1 == 5) {
+            if (semillas1.equals("café")) {
+                return new ImageIcon(getClass().getResource("/presentation/5semillas.png"));
+            } else if (semillas1.equals("amarillo")) {
+                return new ImageIcon(getClass().getResource("/presentation/5semillasAmarilla.png"));
+            } else if (semillas1.equals("azul")) {
+                return new ImageIcon(getClass().getResource("/presentation/5semillasAzul.png"));
+            } else if (semillas1.equals("gris")) {
+                return new ImageIcon(getClass().getResource("/presentation/5semillasGris.png"));
+            } else if (semillas1.equals("morado")) {
+                return new ImageIcon(getClass().getResource("/presentation/5semillasMorada.png"));
+            } else if (semillas1.equals("negro")) {
+                return new ImageIcon(getClass().getResource("/presentation/5semillasNegra.png"));
+            } else if (semillas1.equals("rojo")) {
+                return new ImageIcon(getClass().getResource("/presentation/5semillasRoja.png"));
+            } else if (semillas1.equals("rosado")) {
+                return new ImageIcon(getClass().getResource("/presentation/5semillasRosada.png"));
+            } else if (semillas1.equals("verde")) {
+                return new ImageIcon(getClass().getResource("/presentation/5semillasVerde.png"));
+            }
+
+        }else if (cantSemillas1 == 6) {
+            if (semillas1.equals("café")) {
+                return new ImageIcon(getClass().getResource("/presentation/6semillas.png"));
+            } else if (semillas1.equals("amarillo")) {
+                return new ImageIcon(getClass().getResource("/presentation/6semillasAmarillo.png"));
+            } else if (semillas1.equals("azul")) {
+                return new ImageIcon(getClass().getResource("/presentation/6semillasAzul.png"));
+            } else if (semillas1.equals("gris")) {
+                return new ImageIcon(getClass().getResource("/presentation/6semillasGris.png"));
+            } else if (semillas1.equals("morado")) {
+                return new ImageIcon(getClass().getResource("/presentation/6semillasMorada.png"));
+            } else if (semillas1.equals("negro")) {
+                return new ImageIcon(getClass().getResource("/presentation/6semillasNegra.png"));
+            } else if (semillas1.equals("rojo")) {
+                return new ImageIcon(getClass().getResource("/presentation/6semillasRojo.png"));
+            } else if (semillas1.equals("rosado")) {
+                return new ImageIcon(getClass().getResource("/presentation/6semillasRosada.png"));
+            } else if (semillas1.equals("verde")) {
+                return new ImageIcon(getClass().getResource("/presentation/6semillasVerde.png"));
+            }
+
+        }else if (cantSemillas1 == 7) {
+            if (semillas1.equals("café")) {
+                return new ImageIcon(getClass().getResource("/presentation/7semillas.png"));
+            } else if (semillas1.equals("amarillo")) {
+                return new ImageIcon(getClass().getResource("/presentation/7semillasAmarilla.png"));
+            } else if (semillas1.equals("azul")) {
+                return new ImageIcon(getClass().getResource("/presentation/7semillasAzul.png"));
+            } else if (semillas1.equals("gris")) {
+                return new ImageIcon(getClass().getResource("/presentation/7semillasGris.png"));
+            } else if (semillas1.equals("morado")) {
+                return new ImageIcon(getClass().getResource("/presentation/7semillasMorada.png"));
+            } else if (semillas1.equals("negro")) {
+                return new ImageIcon(getClass().getResource("/presentation/7semillasNegra.png"));
+            } else if (semillas1.equals("rojo")) {
+                return new ImageIcon(getClass().getResource("/presentation/7semillasRoja.png"));
+            } else if (semillas1.equals("rosado")) {
+                return new ImageIcon(getClass().getResource("/presentation/7semillasRosada.png"));
+            } else if (semillas1.equals("verde")) {
+                return new ImageIcon(getClass().getResource("/presentation/7semillasVerde.png"));
+            }
+
+        }else if (cantSemillas1 >= 8) {
+            if (semillas1.equals("café")) {
+                return new ImageIcon(getClass().getResource("/presentation/8semillas.png"));
+            } else if (semillas1.equals("amarillo")) {
+                return new ImageIcon(getClass().getResource("/presentation/8semillasAmarilla.png"));
+            } else if (semillas1.equals("azul")) {
+                return new ImageIcon(getClass().getResource("/presentation/8semillasAzul.png"));
+            } else if (semillas1.equals("gris")) {
+                return new ImageIcon(getClass().getResource("/presentation/8semillasGris.png"));
+            } else if (semillas1.equals("morado")) {
+                return new ImageIcon(getClass().getResource("/presentation/8semillasMorada.png"));
+            } else if (semillas1.equals("negro")) {
+                return new ImageIcon(getClass().getResource("/presentation/8semillasNegra.png"));
+            } else if (semillas1.equals("rojo")) {
+                return new ImageIcon(getClass().getResource("/presentation/8semillasRoja.png"));
+            } else if (semillas1.equals("rosado")) {
+                return new ImageIcon(getClass().getResource("/presentation/8semillasRosada.png"));
+            } else if (semillas1.equals("verde")) {
+                return new ImageIcon(getClass().getResource("/presentation/8semillasVerde.png"));
+            }
+        } return null;
+    }
+
+    public void validadorImagenesJug1(int cantSemillas1){
         if (cantSemillas1 == 0){
             jugador1 = new ImageIcon(getClass().getResource("/presentation/bola.png"));
             zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/bola2.png"));
-
         }else if (cantSemillas1 == 1){
             if (semillas1.equals("café")){
                 jugador1 = new ImageIcon(getClass().getResource("/presentation/1semilla.png"));
@@ -550,7 +730,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     }
 
 
-    public void validadorImagenesJug2(){
+    public void validadorImagenesJug2(int cantSemillas2){
         if (cantSemillas2  == 0){
             jugador2 = new ImageIcon(getClass().getResource("/presentation/bola.png"));
             zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/bola2.png"));
@@ -795,10 +975,29 @@ public class KalahGUIGame extends JFrame implements ActionListener {
             }
         }
     }
+    private  ImageIcon getImage(int numSemillas, String color){
+        color = mayusL(color);
+        String dir = "/presentation/"+numSemillas+"semillas"+color+".png";
+        if (numSemillas == 0){
+            dir = "/presentation/bola.png";
+        }
+        System.out.println(dir);
+        return new ImageIcon(getClass().getResource(dir));
+    }
+    private String mayusL(String palabra){
+        String firstLtr = palabra.substring(0, 1);
+        String restLtrs = palabra.substring(1, palabra.length());
 
-
+        firstLtr = firstLtr.toUpperCase();
+        palabra = firstLtr + restLtrs;
+        return palabra;
+    }
     private void refresh(){
-        prepareElementsBoard();
+        KalahGUIGame game = new KalahGUIGame(color1, color2, semillas1, semillas2, cantSemillas1, cols, kalah);
+        game.setVisible(true);
+        game.setResizable(false);
+        game.setLocationRelativeTo(null);
+        dispose();
     }
 
     private void prepareActions() {
@@ -874,7 +1073,25 @@ public class KalahGUIGame extends JFrame implements ActionListener {
             dispose();
         }
 
-
+    }
+    class EventosCasitas implements ActionListener{
+        private int x;
+        private int y;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            kalah.movimientoJug(x,y);
+            refresh();
+        }
+        public void setCords(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+        public int getX(){
+            return x;
+        }
+        public int getY() {
+            return y;
+        }
     }
     class Fondo extends JPanel{
         private Image imagen;

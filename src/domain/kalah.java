@@ -122,7 +122,7 @@ public class kalah {
                     s -= 1;
                 }
             }
-        }
+        }imprimir();
     }
 
 
@@ -201,8 +201,8 @@ public class kalah {
     }
 
     public static void main(String[] arg){
-        kalah gui = new kalah(6,20);
-        gui.vaciarCasa(0,2);
+        kalah gui = new kalah(6,3);
+        gui.vaciarCasa(0,3);
         gui.imprimir();
     }
 //:(
