@@ -461,7 +461,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                 jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasCafe.png"));
                 zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasCafe.png"));
             } else if (semillas1.equals("amarillo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasAmarillo.png"));
+                jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasAmarilla.png"));
                 zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasAmarilla.png"));
             } else if (semillas1.equals("azul")) {
                 jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasAzul.png"));
@@ -708,7 +708,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                 jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasCafe.png"));
                 zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasCafe.png"));
             } else if (semillas2.equals("amarillo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasAmarillo.png"));
+                jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasAmarilla.png"));
                 zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasAmarilla.png"));
             } else if (semillas2.equals("azul")) {
                 jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasAzul.png"));
