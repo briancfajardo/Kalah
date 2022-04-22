@@ -132,13 +132,13 @@ public class kalah {
 
     public void reglasRobarTurnoYFichas(int fila, int columna){
         if (turno == 1 && fila == 0) {
-            if (jugador1.get(columna) == 1){
+            if (jugador1.get(columna) == 1 && jugador2.get(columna) != 0){
                 contenedores.set(0, jugador1.get(columna) + jugador2.get(columna) + contenedores.get(0));
                 jugador2.set(columna, 0);
                 jugador1.set(columna, 0);
             }
         }else if (turno == 2 && fila == 2){
-            if (jugador2.get(columna) == 1){
+            if (jugador2.get(columna) == 1 && jugador1.get(columna) != 0){
                 contenedores.set(cols-1, jugador2.get(columna) + jugador1.get(columna) + contenedores.get(cols-1));
                 jugador1.set(columna, 0);
                 jugador2.set(columna, 0);
