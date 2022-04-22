@@ -134,7 +134,6 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
 
     }
-    //Carga de imagenes
 
     private void prepareElementsBoard(){
         setLayout(new GridLayout(rows,cols));
@@ -295,8 +294,21 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     add(aux);
                 }
             }
-        }kalah.cambioTurno();
+        }
+        kalah.cambioTurno();
+        finaliza();
+    }
 
+    public void finaliza(){
+        boolean termina = kalah.getFin();
+        if (termina){
+            KalahGUIFinal fin = new KalahGUIFinal(kalah);
+            fin.setVisible(true);
+            fin.setResizable(false);
+            fin.setLocationRelativeTo(null);
+            dispose();
+            //System.exit(0);
+        }
     }
 
     public void colorSemilla(String color, int jugador){
@@ -333,6 +345,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }
         return new ImageIcon(getClass().getResource(dir));
     }
+
     private  ImageIcon getImageZoom(int numSemillas, String color){
         color = mayusL(color);
         String dir = "/presentation/zoom"+numSemillas+"semillas"+color+".png";
@@ -343,6 +356,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }
         return new ImageIcon(getClass().getResource(dir));
     }
+
     private String mayusL(String palabra){
         String firstLtr = palabra.substring(0, 1);
         String restLtrs = palabra.substring(1, palabra.length());

@@ -16,6 +16,7 @@ public class kalah {
     private int ultY = 0;
     private int mov1 = 0;
     private int mov2 = 0;
+    private boolean termina = false;
 
     public kalah(int cols, int seeds){
         this.cols = cols;
@@ -105,7 +106,7 @@ public class kalah {
                         ultY = aux + 1;
                         aux += 1;
                     }else {
-                        jugador2.set(aux, jugador2.get(aux) + 1);
+                        jugador2.set(aux, jugador2.get(aux));
                         su = 0;
                         ultX = 2;
                         ultY = aux;
@@ -133,13 +134,15 @@ public class kalah {
     public void reglasRobarTurnoYFichas(int fila, int columna){
         if (turno == 1 && fila == 0) {
             if (jugador1.get(columna) == 1 && jugador2.get(columna) != 0){
-                jugador1.set(columna, jugador1.get(columna) + jugador2.get(columna));
+                contenedores.set(0, jugador1.get(columna) + jugador2.get(columna) + contenedores.get(0));
+                jugador1.set(columna, 0);
                 jugador2.set(columna, 0);
             }
         }else if (turno == 2 && fila == 2){
             if (jugador2.get(columna) == 1 && jugador1.get(columna) != 0){
-                jugador2.set(columna, jugador2.get(columna) + jugador1.get(columna));
+                contenedores.set(cols-1, jugador2.get(columna) + jugador1.get(columna) + contenedores.get(cols-1));
                 jugador1.set(columna, 0);
+                jugador2.set(columna, 0);
             }
             //repite turno
         }else if (fila == 1){
@@ -168,21 +171,27 @@ public class kalah {
     public int getMov2(){
         return mov2;
     }
+    public boolean getFin(){return termina; }
+
     public void finalizaJuego(){
         int totalJ1 = semillasJugador(jugador1);
         int totalJ2 = semillasJugador(jugador2);
         if (totalJ1 == 0 && ultY == 0 && ultX == 1){
             contenedores.set(0,contenedores.get(0)+ totalJ2);
             jugador2.replaceAll(ignored -> 0);
+            termina = true;
         }else if (totalJ2 == 0 && ultY == cols-1 && ultX == 1){
             contenedores.set(cols-1,contenedores.get(cols-1) + totalJ1);
             jugador1.replaceAll(ignored -> 0);
+            termina = true;
         }else if (totalJ1 == 0 && ultY != 0 && ultX != 1){
             contenedores.set(cols-1,contenedores.get(cols-1)+ totalJ2);
             jugador2.replaceAll(ignored -> 0);
+            termina = true;
         }else if (totalJ2 == 0 && ultY != cols-1 && ultX != 1){
             contenedores.set(0,contenedores.get(0) + totalJ1);
             jugador1.replaceAll(ignored -> 0);
+            termina = true;
         }
     }
     private  int semillasJugador(ArrayList<Integer> jugador){
