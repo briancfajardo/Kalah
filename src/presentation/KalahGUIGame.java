@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -42,7 +43,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     private Color color1;
     private Color color2;
     private String semillas1 = "azul";
-    private String semillas2 = "rojo";
+    private String semillas2 = "roja";
     private int cantSemillas1 = 3;
     private int cantSemillas2 = 3;
 
@@ -65,7 +66,15 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         prepareElements(color1, color2, sem1, sem2, numSem, numCas);
         prepareActions();
         setVisible(true);
+    }
 
+    public KalahGUIGame(Color color1, Color color2, String sem1, String sem2, int numSem, int numCas,kalah k){
+        this.kalah = k;
+        this.setContentPane(fondo);
+        setTitle("Kalah");
+        prepareElements(color1, color2, sem1, sem2, numSem, numCas);
+        prepareActions();
+        setVisible(true);
     }
 
     private void prepareElements(){
@@ -129,20 +138,22 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
     private void prepareElementsBoard(){
         setLayout(new GridLayout(rows,cols));
-        int cont = 0;
         for(int i = 0; i < rows; i++){
             for (int j = 0; j < cols; j++){
 
                 if (i != 1) {
                     JButton aux = new JButton();
+                    EventosCasitas evento = new EventosCasitas();
+                    evento.setCords(i,j);
                     aux.setOpaque(true);
                     aux.setContentAreaFilled(false);
                     if (i == 0) {
-                        aux.setIcon(new ImageIcon(jugador1.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
+                        aux.setIcon(new ImageIcon(getImage(kalah.getSeeds(i,j), semillas1).getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                         aux.setRolloverIcon(new ImageIcon(zoomjugador1.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
                     }else{
-                        aux.setIcon(new ImageIcon(jugador2.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
+                        aux.setIcon(new ImageIcon(getImage(kalah.getSeeds(i,j), semillas2).getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                         aux.setRolloverIcon(new ImageIcon(zoomjugador2.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
+                        aux.setEnabled(false);
                     }
                     aux.setText(kalah.getSeeds(i,j)+"");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 15));
@@ -153,7 +164,7 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     aux.setHorizontalAlignment(SwingConstants.LEFT);
                     aux.setBorderPainted(false);
                     aux.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                    cont += 1;
+                    aux.addActionListener(evento);
                     add(aux);
                 }else if(j == 0 || j == cols-1){
                     JLabel aux = new JLabel(new ImageIcon(imagen.getImage().getScaledInstance((ancho*8/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
@@ -186,8 +197,9 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     aux.setForeground(new Color(255, 255, 255));
                     add(aux);
                 }
+
             }
-        }
+        }kalah.cambioTurno();
     }
 
 
@@ -200,18 +212,14 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         colorSemilla(colSem2, 2);
         cols = numCas;
 
-
-        validadorImagenesJug1();
-        validadorImagenesJug2();
-        //ImageIcon semilla3 = new ImageIcon(getClass().getResource("/presentation/3semillasCafe.png"));
-
         setLayout(new GridLayout(rows,cols));
-        int cont = 0;
         for(int i = 0; i < rows; i++){
             for (int j = 0; j < cols; j++){
 
                 if (i != 1) {
                     JButton aux = new JButton();
+                    EventosCasitas evento = new EventosCasitas();
+                    evento.setCords(i,j);
                     aux.setOpaque(true);
                     aux.setContentAreaFilled(false);
                     if (i == 0) {
@@ -219,17 +227,29 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                             aux.setContentAreaFilled(true);
                             aux.setBackground(color1);
                         }
-                        aux.setIcon(new ImageIcon(jugador1.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
-                        aux.setRolloverIcon(new ImageIcon(zoomjugador1.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
+                        //validadorImagenesJug1(kalah.getSeeds(i,j));
+                        aux.setIcon(new ImageIcon(getImage(kalah.getSeeds(i,j), semillas1).getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
+                        aux.setRolloverIcon(new ImageIcon(getImageZoom(kalah.getSeeds(i,j), semillas1).getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
+                        if(kalah.getTurno() == 1){
+                            aux.setEnabled(false);
+                        }else if (kalah.getSeeds(i,j) == 0){
+                            aux.setEnabled(false);
+                        }
                     }else{
                         if (color2 != null ){
                             aux.setContentAreaFilled(true);
                             aux.setBackground(color2);
                         }
-                        aux.setIcon(new ImageIcon(jugador2.getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
-                        aux.setRolloverIcon(new ImageIcon(zoomjugador2.getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
+                        //validadorImagenesJug2(kalah.getSeeds(i,j));
+                        aux.setIcon(new ImageIcon(getImage(kalah.getSeeds(i,j), semillas2).getImage().getScaledInstance((ancho*7/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
+                        aux.setRolloverIcon(new ImageIcon(getImageZoom(kalah.getSeeds(i,j), semillas2).getImage().getScaledInstance((ancho*5/6)/cols,(alto*2/3)/rows,Image.SCALE_SMOOTH)));
+                        if(kalah.getTurno() == 2){
+                            aux.setEnabled(false);
+                        }else if (kalah.getSeeds(i,j) == 0){
+                            aux.setEnabled(false);
+                        }
                     }
-                    aux.setText(cantSemillas1+"");
+                    aux.setText(kalah.getSeeds(i,j)+"");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 15));
                     aux.setForeground(new Color(255, 255, 255));
                     aux.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -238,13 +258,13 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     aux.setHorizontalAlignment(SwingConstants.LEFT);
                     aux.setBorderPainted(false);
                     aux.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                    cont += 1;
+                    aux.addActionListener(evento);
                     add(aux);
                 }else if(j == 0){
-                    JLabel aux = new JLabel(new ImageIcon(imagen.getImage().getScaledInstance((ancho*8/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
+                    JLabel aux = new JLabel(new ImageIcon(getImage(kalah.getContJ1(), semillas1).getImage().getScaledInstance((ancho*8/9)/cols,(alto*3/5)/rows,Image.SCALE_SMOOTH)));
                     add(aux);
                 }else if(j == cols-1) {
-                    JLabel aux = new JLabel(new ImageIcon(imagen.getImage().getScaledInstance((ancho * 8 / 9) / cols, (alto * 3 / 5) / rows, Image.SCALE_SMOOTH)));
+                    JLabel aux = new JLabel(new ImageIcon(getImage(kalah.getContJ2(), semillas2).getImage().getScaledInstance((ancho * 8 / 9) / cols, (alto * 3 / 5) / rows, Image.SCALE_SMOOTH)));
                     add(aux);
                 }else if(j == 1) {
                     JLabel aux = new JLabel();
@@ -259,12 +279,12 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     aux.setForeground(new Color(255, 255, 255));
                     add(aux);
                 }else if(j == 2){
-                    JLabel aux = new JLabel("<html><center>Has hecho "+ mov1 + " movimientos. ¡Apresúrate a ganar!</center><html>");
+                    JLabel aux = new JLabel("<html><center>Has hecho "+ kalah.getMov1() + " movimientos. ¡Apresúrate a ganar!</center><html>");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 20*6/cols));
                     aux.setForeground(new Color(255, 255, 255));
                     add(aux);
                 }else if(j == cols-3) {
-                    JLabel aux = new JLabel("<html><center>Has hecho " + mov2 + " movimientos. ¡Apresúrate a ganar!</center><html>");
+                    JLabel aux = new JLabel("<html><center>Has hecho " + kalah.getMov2() + " movimientos. ¡Apresúrate a ganar!</center><html>");
                     aux.setFont(new Font("Serif", Font.CENTER_BASELINE, 20*6/cols));
                     aux.setForeground(new Color(255, 255, 255));
                     add(aux);
@@ -275,7 +295,8 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                     add(aux);
                 }
             }
-        }
+        }kalah.cambioTurno();
+
     }
 
     public void colorSemilla(String color, int jugador){
@@ -290,514 +311,52 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }
     }
 
-    public void numSemilla(int cantidad, int jugador){
+    public void numSemilla(int cantidad, int jugador) {
         //Numeros posibles: 0,1,2,3,...
-        if (jugador == 1){
+        if (jugador == 1) {
             cantSemillas1 = cantidad;
-        }else if (jugador == 2){
+        } else if (jugador == 2) {
             cantSemillas2 = cantidad;
-        }else{
-            JOptionPane.showMessageDialog(this,"El jugador no existe\n" ,"colorSemilla",
-                    1,null);
+        } else {
+            JOptionPane.showMessageDialog(this, "El jugador no existe\n", "colorSemilla",
+                    1, null);
         }
     }
 
-    public void validadorImagenesJug1(){
-        if (cantSemillas1 == 0){
-            jugador1 = new ImageIcon(getClass().getResource("/presentation/bola.png"));
-            zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/bola2.png"));
-
-        }else if (cantSemillas1 == 1){
-            if (semillas1.equals("café")){
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/1semillasCafe.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasCafe.png"));
-            }else if (semillas1.equals("amarillo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/1semillasAmarilla.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasAmarilla.png"));
-            }else if (semillas1.equals("azul")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/1semillasAzul.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasAzul.png"));
-            }else if (semillas1.equals("gris")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/1semillasGris.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasGris.png"));
-            }else if (semillas1.equals("morado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/1semillasMorada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasMorada.png"));
-            }else if (semillas1.equals("negro")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/1semillasNegra.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasNegra.png"));
-            }else if (semillas1.equals("rojo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/1semillasRoja.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasRoja.png"));
-            }else if (semillas1.equals("rosado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/1semillasRosada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasRosada.png"));
-            }else if (semillas1.equals("verde")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/1semillasVerde.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasVerde.png"));
-            }
-
-        }else if (cantSemillas1 == 2) {
-            if (semillas1.equals("café")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/2semillasCafe.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasCafe.png"));
-            } else if (semillas1.equals("amarillo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/2semillasAmarilla.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasAmarilla.png"));
-            } else if (semillas1.equals("azul")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/2semillasAzul.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasAzul.png"));
-            } else if (semillas1.equals("gris")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/2semillasGris.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasGris.png"));
-            } else if (semillas1.equals("morado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/2semillasMorada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasMorada.png"));
-            } else if (semillas1.equals("negro")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/2semillasNegra.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasNegra.png"));
-            } else if (semillas1.equals("rojo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/2semillasRoja.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasRoja.png"));
-            } else if (semillas1.equals("rosado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/2semillasRosada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasRosada.png"));
-            } else if (semillas1.equals("verde")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/2semillasVerde.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasVerde.png"));
-            }
-        }else if (cantSemillas1 == 3) {
-            if (semillas1.equals("café")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasCafe.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasCafe.png"));
-            } else if (semillas1.equals("amarillo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasAmarilla.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasAmarilla.png"));
-            } else if (semillas1.equals("azul")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasAzul.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasAzul.png"));
-            } else if (semillas1.equals("gris")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasGris.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasGris.png"));
-            } else if (semillas1.equals("morado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasMorada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasMorada.png"));
-            } else if (semillas1.equals("negro")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasNegra.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasNegra.png"));
-            } else if (semillas1.equals("rojo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasRoja.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasRoja.png"));
-            } else if (semillas1.equals("rosado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasRosada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasRosada.png"));
-            } else if (semillas1.equals("verde")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/3semillasVerde.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasVerde.png"));
-            }
-
-        }else if (cantSemillas1 == 4) {
-            if (semillas1.equals("café")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/4semillasCafe.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasCafe.png"));
-            } else if (semillas1.equals("amarillo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/4semillasAmarilla.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasAmarilla.png"));
-            } else if (semillas1.equals("azul")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/4semillasAzul.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasAzul.png"));
-            } else if (semillas1.equals("gris")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/4semillasGris.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasGris.png"));
-            } else if (semillas1.equals("morado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/4semillasMorada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasMorada.png"));
-            } else if (semillas1.equals("negro")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/4semillasNegra.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasNegra.png"));
-            } else if (semillas1.equals("rojo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/4semillasRoja.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasRoja.png"));
-            } else if (semillas1.equals("rosado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/4semillasRosada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasRosada.png"));
-            } else if (semillas1.equals("verde")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/4semillasVerde.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasVerde.png"));
-            }
-
-        }else if (cantSemillas1 == 5) {
-            if (semillas1.equals("café")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/5semillasCafe.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasCafe.png"));
-            } else if (semillas1.equals("amarillo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/5semillasAmarilla.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasAmarilla.png"));
-            } else if (semillas1.equals("azul")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/5semillasAzul.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasAzul.png"));
-            } else if (semillas1.equals("gris")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/5semillasGris.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasGris.png"));
-            } else if (semillas1.equals("morado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/5semillasMorada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasMorada.png"));
-            } else if (semillas1.equals("negro")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/5semillasNegra.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasNegra.png"));
-            } else if (semillas1.equals("rojo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/5semillasRoja.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasRoja.png"));
-            } else if (semillas1.equals("rosado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/5semillasRosada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasRosada.png"));
-            } else if (semillas1.equals("verde")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/5semillasVerde.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasVerde.png"));
-            }
-
-        }else if (cantSemillas1 == 6) {
-            if (semillas1.equals("café")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasCafe.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasCafe.png"));
-            } else if (semillas1.equals("amarillo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasAmarilla.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasAmarilla.png"));
-            } else if (semillas1.equals("azul")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasAzul.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasAzul.png"));
-            } else if (semillas1.equals("gris")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasGris.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasGris.png"));
-            } else if (semillas1.equals("morado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasMorada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasMorada.png"));
-            } else if (semillas1.equals("negro")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasNegra.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasNegra.png"));
-            } else if (semillas1.equals("rojo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasRoja.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasRoja.png"));
-            } else if (semillas1.equals("rosado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasRosada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasRosada.png"));
-            } else if (semillas1.equals("verde")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/6semillasVerde.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasVerde.png"));
-            }
-
-        }else if (cantSemillas1 == 7) {
-            if (semillas1.equals("café")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/7semillasCafe.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasCafe.png"));
-            } else if (semillas1.equals("amarillo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/7semillasAmarilla.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasAmarilla.png"));
-            } else if (semillas1.equals("azul")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/7semillasAzul.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasAzul.png"));
-            } else if (semillas1.equals("gris")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/7semillasGris.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasGris.png"));
-            } else if (semillas1.equals("morado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/7semillasMorada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasMorada.png"));
-            } else if (semillas1.equals("negro")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/7semillasNegra.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasNegra.png"));
-            } else if (semillas1.equals("rojo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/7semillasRoja.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasRoja.png"));
-            } else if (semillas1.equals("rosado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/7semillasRosada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasRosada.png"));
-            } else if (semillas1.equals("verde")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/7semillasVerde.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasVerde.png"));
-            }
-
-        }else if (cantSemillas1 >= 8) {
-            if (semillas1.equals("café")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/8semillasCafe.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasCafe.png"));
-            } else if (semillas1.equals("amarillo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/8semillasAmarilla.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasAmarilla.png"));
-            } else if (semillas1.equals("azul")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/8semillasAzul.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasAzul.png"));
-            } else if (semillas1.equals("gris")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/8semillasGris.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasGris.png"));
-            } else if (semillas1.equals("morado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/8semillasMorada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasMorada.png"));
-            } else if (semillas1.equals("negro")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/8semillasNegra.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasNegra.png"));
-            } else if (semillas1.equals("rojo")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/8semillasRoja.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasRoja.png"));
-            } else if (semillas1.equals("rosado")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/8semillasRosada.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasRosada.png"));
-            } else if (semillas1.equals("verde")) {
-                jugador1 = new ImageIcon(getClass().getResource("/presentation/8semillasVerde.png"));
-                zoomjugador1 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasVerde.png"));
-            }
+    private  ImageIcon getImage(int numSemillas, String color){
+        color = mayusL(color);
+        String dir = "/presentation/"+numSemillas+"semillas"+color+".png";
+        if (numSemillas == 0){
+            dir = "/presentation/bola.png";
+        } else if (numSemillas > 8) {
+            dir = "/presentation/8semillas"+color+".png";
         }
+        return new ImageIcon(getClass().getResource(dir));
     }
-
-
-    public void validadorImagenesJug2(){
-        if (cantSemillas2  == 0){
-            jugador2 = new ImageIcon(getClass().getResource("/presentation/bola.png"));
-            zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/bola2.png"));
-
-        }else if (cantSemillas2 == 1){
-            if (semillas2.equals("café")){
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/1semillasCafe.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasCafe.png"));
-            }else if (semillas2.equals("amarillo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/1semillasAmarilla.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasAmarilla.png"));
-            }else if (semillas2.equals("azul")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/1semillasAzul.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasAzul.png"));
-            }else if (semillas2.equals("gris")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/1semillasGris.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasGris.png"));
-            }else if (semillas2.equals("morado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/1semillasMorada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasMorada.png"));
-            }else if (semillas2.equals("negro")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/1semillasNegra.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasNegra.png"));
-            }else if (semillas2.equals("rojo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/1semillasRoja.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasRoja.png"));
-            }else if (semillas2.equals("rosado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/1semillasRosada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasRosada.png"));
-            }else if (semillas2.equals("verde")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/1semillasVerde.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom1semillasVerde.png"));
-            }
-
-        }else if (cantSemillas2 == 2) {
-            if (semillas2.equals("café")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/2semillasCafe.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasCafe.png"));
-            } else if (semillas2.equals("amarillo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/2semillasAmarilla.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasAmarilla.png"));
-            } else if (semillas2.equals("azul")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/2semillasAzul.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasAzul.png"));
-            } else if (semillas2.equals("gris")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/2semillasGris.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasGris.png"));
-            } else if (semillas2.equals("morado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/2semillasMorada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasMorada.png"));
-            } else if (semillas2.equals("negro")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/2semillasNegra.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasNegra.png"));
-            } else if (semillas2.equals("rojo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/2semillasRoja.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasRoja.png"));
-            } else if (semillas2.equals("rosado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/2semillasRosada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasRosada.png"));
-            } else if (semillas2.equals("verde")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/2semillasVerde.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom2semillasVerde.png"));
-            }
-        }else if (cantSemillas2 == 3) {
-            if (semillas2.equals("café")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasCafe.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasCafe.png"));
-            } else if (semillas2.equals("amarillo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasAmarilla.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasAmarilla.png"));
-            } else if (semillas2.equals("azul")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasAzul.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasAzul.png"));
-            } else if (semillas2.equals("gris")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasGris.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasGris.png"));
-            } else if (semillas2.equals("morado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasMorada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasMorada.png"));
-            } else if (semillas2.equals("negro")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasNegra.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasNegra.png"));
-            } else if (semillas2.equals("rojo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasRoja.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasRoja.png"));
-            } else if (semillas2.equals("rosado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasRosada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasRosada.png"));
-            } else if (semillas2.equals("verde")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/3semillasVerde.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom3semillasVerde.png"));
-            }
-
-        }else if (cantSemillas2 == 4) {
-            if (semillas2.equals("café")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/4semillasCafe.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasCafe.png"));
-            } else if (semillas2.equals("amarillo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/4semillasAmarilla.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasAmarilla.png"));
-            } else if (semillas2.equals("azul")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/4semillasAzul.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasAzul.png"));
-            } else if (semillas2.equals("gris")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/4semillasGris.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasGris.png"));
-            } else if (semillas2.equals("morado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/4semillasMorada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasMorada.png"));
-            } else if (semillas2.equals("negro")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/4semillasNegra.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasNegra.png"));
-            } else if (semillas2.equals("rojo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/4semillasRoja.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasRoja.png"));
-            } else if (semillas2.equals("rosado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/4semillasRosada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasRosada.png"));
-            } else if (semillas2.equals("verde")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/4semillasVerde.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom4semillasVerde.png"));
-            }
-
-        }else if (cantSemillas2 == 5) {
-            if (semillas2.equals("café")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/5semillasCafe.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasCafe.png"));
-            } else if (semillas2.equals("amarillo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/5semillasAmarilla.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasAmarilla.png"));
-            } else if (semillas2.equals("azul")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/5semillasAzul.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasAzul.png"));
-            } else if (semillas2.equals("gris")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/5semillasGris.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasGris.png"));
-            } else if (semillas2.equals("morado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/5semillasMorada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasMorada.png"));
-            } else if (semillas2.equals("negro")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/5semillasNegra.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasNegra.png"));
-            } else if (semillas2.equals("rojo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/5semillasRoja.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasRoja.png"));
-            } else if (semillas2.equals("rosado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/5semillasRosada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasRosada.png"));
-            } else if (semillas2.equals("verde")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/5semillasVerde.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom5semillasVerde.png"));
-            }
-
-        }else if (cantSemillas2 == 6) {
-            if (semillas2.equals("café")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasCafe.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasCafe.png"));
-            } else if (semillas2.equals("amarillo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasAmarilla.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasAmarilla.png"));
-            } else if (semillas2.equals("azul")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasAzul.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasAzul.png"));
-            } else if (semillas2.equals("gris")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasGris.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasGris.png"));
-            } else if (semillas2.equals("morado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasMorada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasMorada.png"));
-            } else if (semillas2.equals("negro")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasNegra.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasNegra.png"));
-            } else if (semillas2.equals("rojo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasRoja.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasRoja.png"));
-            } else if (semillas2.equals("rosado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasRosada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasRosada.png"));
-            } else if (semillas2.equals("verde")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/6semillasVerde.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom6semillasVerde.png"));
-            }
-
-        }else if (cantSemillas2 == 7) {
-            if (semillas2.equals("café")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/7semillasCafe.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasCafe.png"));
-            } else if (semillas2.equals("amarillo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/7semillasAmarilla.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasAmarilla.png"));
-            } else if (semillas2.equals("azul")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/7semillasAzul.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasAzul.png"));
-            } else if (semillas2.equals("gris")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/7semillasGris.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasGris.png"));
-            } else if (semillas2.equals("morado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/7semillasMorada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasMorada.png"));
-            } else if (semillas2.equals("negro")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/7semillasNegra.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasNegra.png"));
-            } else if (semillas2.equals("rojo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/7semillasRoja.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasRoja.png"));
-            } else if (semillas2.equals("rosado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/7semillasRosada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasRosada.png"));
-            } else if (semillas2.equals("verde")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/7semillasVerde.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom7semillasVerde.png"));
-            }
-
-        }else if (cantSemillas2 >= 8) {
-            if (semillas2.equals("café")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/8semillasCafe.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasCafe.png"));
-            } else if (semillas2.equals("amarillo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/8semillasAmarilla.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasAmarilla.png"));
-            } else if (semillas2.equals("azul")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/8semillasAzul.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasAzul.png"));
-            } else if (semillas2.equals("gris")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/8semillasGris.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasGris.png"));
-            } else if (semillas2.equals("morado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/8semillasMorada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasMorada.png"));
-            } else if (semillas2.equals("negro")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/8semillasNegra.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasNegra.png"));
-            } else if (semillas2.equals("rojo")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/8semillasRoja.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasRoja.png"));
-            } else if (semillas2.equals("rosado")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/8semillasRosada.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasRosada.png"));
-            } else if (semillas2.equals("verde")) {
-                jugador2 = new ImageIcon(getClass().getResource("/presentation/8semillasVerde.png"));
-                zoomjugador2 = new ImageIcon(getClass().getResource("/presentation/zoom8semillasVerde.png"));
-            }
+    private  ImageIcon getImageZoom(int numSemillas, String color){
+        color = mayusL(color);
+        String dir = "/presentation/zoom"+numSemillas+"semillas"+color+".png";
+        if (numSemillas == 0){
+            dir = "/presentation/bola2.png";
+        }else if (numSemillas > 8) {
+            dir = "/presentation/zoom8semillas"+color+".png";
         }
+        return new ImageIcon(getClass().getResource(dir));
     }
+    private String mayusL(String palabra){
+        String firstLtr = palabra.substring(0, 1);
+        String restLtrs = palabra.substring(1, palabra.length());
 
-
+        firstLtr = firstLtr.toUpperCase();
+        palabra = firstLtr + restLtrs;
+        return palabra;
+    }
     private void refresh(){
-        prepareElementsBoard();
+        KalahGUIGame game = new KalahGUIGame(color1, color2, semillas1, semillas2, cantSemillas1, cols, kalah);
+        game.setVisible(true);
+        game.setResizable(false);
+        game.setLocationRelativeTo(null);
+        dispose();
     }
 
     private void prepareActions() {
@@ -873,7 +432,25 @@ public class KalahGUIGame extends JFrame implements ActionListener {
             dispose();
         }
 
-
+    }
+    class EventosCasitas implements ActionListener{
+        private int x;
+        private int y;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            kalah.movimientoJug(x,y);
+            refresh();
+        }
+        public void setCords(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+        public int getX(){
+            return x;
+        }
+        public int getY() {
+            return y;
+        }
     }
     class Fondo extends JPanel{
         private Image imagen;

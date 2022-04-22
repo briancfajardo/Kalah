@@ -11,11 +11,11 @@ public class kalah {
     private int rows = 3;
     private int cols;
     private int seeds;
-    private int movimientosJugador1 = 0;
-    private int movimientosJugador2 = 0;
-    private int turno = 1;
+    private int turno = 2;
     private int ultX = 0;
     private int ultY = 0;
+    private int mov1 = 0;
+    private int mov2 = 0;
 
     public kalah(int cols, int seeds){
         this.cols = cols;
@@ -52,6 +52,9 @@ public class kalah {
         if (pl == 0) return jugador1.get(posSeed);
         else return jugador2.get(posSeed);
     }
+    public int getTurno(){
+        return turno;
+    }
 
     public void movimientoJug(int x, int y){
         int moverSemillas = jugador2.get(y);
@@ -67,7 +70,6 @@ public class kalah {
             jugador2.set(y, 0);
         }
         for (int s = 0; s < moverSemillas; s++) {
-            imprimir();
             if (p == 1){
                 if (aux - 1 > -1){
                     if (su == 0){
@@ -76,7 +78,7 @@ public class kalah {
                         ultY = aux-1;
                         aux -= 1;
                     }else {
-                        jugador1.set(aux , jugador1.get(aux-1) + 1);
+                        jugador1.set(aux , jugador1.get(aux) + 1);
                         su = 0;
                         ultX = 0;
                         ultY = aux;
@@ -122,26 +124,28 @@ public class kalah {
                     s -= 1;
                 }
             }
-        }imprimir();
+        }
+        reglasRobarTurnoYFichas(ultX, ultY);
+        finalizaJuego();
     }
 
 
     public void reglasRobarTurnoYFichas(int fila, int columna){
         if (turno == 1 && fila == 0) {
             if (jugador1.get(columna) == 1){
-                jugador1.set(columna, jugador1.get(columna) + jugador2.get(columna));
+                contenedores.set(0, jugador1.get(columna) + jugador2.get(columna) + contenedores.get(0));
                 jugador2.set(columna, 0);
-                cambioTurno();
+                jugador1.set(columna, 0);
             }
         }else if (turno == 2 && fila == 2){
             if (jugador2.get(columna) == 1){
-                jugador2.set(columna, jugador1.get(columna) + jugador1.get(columna));
+                contenedores.set(cols-1, jugador2.get(columna) + jugador1.get(columna) + contenedores.get(cols-1));
                 jugador1.set(columna, 0);
-                cambioTurno();
+                jugador2.set(columna, 0);
             }
         }else if (fila == 1){
-            if (columna == 0 && turno == 1){turno = 1;}
-            else if (columna == cols-1 && turno == 2){turno = 2;}
+            if (columna == 0 && turno == 1){turno = 2;}
+            else if (columna == cols-1 && turno == 2){turno = 1;}
         }
     }
 
@@ -153,11 +157,18 @@ public class kalah {
     public void cambioTurno(){
         if (turno == 1){
             turno = 2;
+            mov2 += 1;
         }else{
             turno = 1;
+            mov1 += 1;
         }
     }
-
+    public int getMov1(){
+        return mov1;
+    }
+    public int getMov2(){
+        return mov2;
+    }
     public void finalizaJuego(){
         int totalJ1 = semillasJugador(jugador1);
         int totalJ2 = semillasJugador(jugador2);

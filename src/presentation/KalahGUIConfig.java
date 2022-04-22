@@ -29,10 +29,10 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
     private Color col1 = null;
     private Color col2 = null;
     private String colSem1 = "azul";
-    private String colSem2 = "rojo";
+    private String colSem2 = "roja";
     private int cantSem = 3;
     private int cantCas = 6;
-    private String[] coloresPosibles = {"rojo", "azul", "amarillo", "verde", "negro", "gris", "morado", "café", "rosado"};
+    private String[] coloresPosibles = {"roja", "azul", "amarilla", "verde", "negra", "gris", "morada", "cafe", "rosada"};
     private Integer[] numerosPosibles = {0,1,2,3,4,5,6,7,8};
     private Integer[] casasPosibles = {6,7,8,9,10,11,12};
 
