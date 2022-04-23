@@ -2,6 +2,12 @@ package domain;
 
 import java.util.ArrayList;
 
+/**
+ * Clase kalah
+ *
+ * @author Camilo Fajardo, Andrea Durán
+ * @version 22/04/2022
+ */
 public class kalah {
     protected ArrayList<Integer> jugador1 = new ArrayList<Integer>();
     protected ArrayList<Integer> jugador2 = new ArrayList<Integer>();
@@ -17,6 +23,11 @@ public class kalah {
     private int mov2 = 0;
     private boolean termina = false;
 
+    /**
+     * Constructor de la clase kalah
+     * @param cols
+     * @param seeds
+     */
     public kalah(int cols, int seeds){
         this.cols = cols;
         this.seeds = seeds;
@@ -34,24 +45,47 @@ public class kalah {
         }
     }
 
-    public void vaciarCasa(int x, int y){
-        movimientoJug(x,y);
-    }
+    /**
+     * Retorna la cantidad de semillas en el almacen del jugador 1
+     * @return
+     */
     public int getContJ1(){
         return contenedores.get(0);
     }
+
+    /**
+     * Retorna la cantidad de semillas en el almacen del jugador 2
+     * @return
+     */
     public int getContJ2(){
         return contenedores.get(cols-1);
     }
+
+    /**
+     * Devuelve de el número de semillas en todas las casas de cada jugador (se el indica cúal por parametro)
+     * @param pl
+     * @param posSeed
+     * @return
+     */
     //pl = player, 0 significa jugador 1 y 1 significa jugador 2
     public int getSeeds(int pl,int posSeed){
         if (pl == 0) return jugador1.get(posSeed);
         else return jugador2.get(posSeed);
     }
+
+    /**
+     * Retorna de quien es el turno
+     * @return
+     */
     public int getTurno(){
         return turno;
     }
 
+    /**
+     * Función que hace el movimiento de las semillas de un jugador a partir de su posición
+     * @param x
+     * @param y
+     */
     public void movimientoJug(int x, int y){
         //System.out.println("X: "+x+" Y: "+y);
         int moverSemillas = jugador2.get(y);
@@ -126,7 +160,11 @@ public class kalah {
         finalizaJuego();
     }
 
-
+    /**
+     * Función que valida las reglas del juego de repetir turno y robar fichas
+     * @param fila
+     * @param columna
+     */
     public void reglasRobarTurnoYFichas(int fila, int columna){
         if (turno == 1 && fila == 0) {
             if (jugador1.get(columna) == 1 && jugador2.get(columna) != 0){
@@ -213,7 +251,7 @@ public class kalah {
 
     public static void main(String[] arg){
         kalah gui = new kalah(6,3);
-        gui.vaciarCasa(0,3);
+        //gui.vaciarCasa(0,3);
         gui.imprimir();
     }
 //:(
