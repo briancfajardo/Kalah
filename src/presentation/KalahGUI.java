@@ -13,8 +13,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-/*
-/*
+/**
+ * Clase de la primera ventana que aparece al ejecutar la aplicación,
+ * permite abrir y guardar archivos, configurar el juego, comenzar un
+ * juego nuevo y cerrar
+ *
+ * @author Camilo Fajardo, Andrea Duran
+ * @version 22/04/2022
  */
 public class KalahGUI extends JFrame implements ActionListener {
 
@@ -32,6 +37,9 @@ public class KalahGUI extends JFrame implements ActionListener {
 	private Fondo fondo = new Fondo();
 
 
+	/**
+	 * Constructor de la clase KalahGUI
+	 */
 	public KalahGUI(){
 		this.setContentPane(fondo);
 		setTitle("Kalah");
@@ -40,6 +48,11 @@ public class KalahGUI extends JFrame implements ActionListener {
 		setVisible(true);
 
 	}
+
+	/**
+	 * Prepara los elementos de la ventana inicial
+	 * Modifica el tamaño y añade el menú y los botones iniciales
+	 */
 	private void prepareElements(){
 		setSize(ancho,alto);
 		prepareElementsMenu();
@@ -48,6 +61,13 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * Prepara los elementos necesarios para el menú, los botones y los
+	 * layouts correspondientes
+	 *
+	 * Crea un JMenuBar y sus respectivos JMenuItems
+	 *
+	 */
 	private void prepareElementsMenu(){
 		menu = new JMenuBar();
 		setJMenuBar(menu);
@@ -77,16 +97,20 @@ public class KalahGUI extends JFrame implements ActionListener {
 		salvar.addActionListener(this);
 		salir.addActionListener(this);
 
-
-
 		archivoM.add(nuevo);
 		archivoM.add(abrir);
 		archivoM.add(salvar);
 		archivoM.add(salir);
 
-
-
 	}
+
+	/**
+	 * Prepara los elementos necesarios para los botones principales
+	 * dentro de la pantalla de inicio, incluyendo el título y dos botones
+	 *
+	 * Le agrega a cada botón su propio oyente para que realiza el evento
+	 * correspondiente
+	 */
 	private void prepareElementsBeginning(){
 		JLabel titulo = new JLabel("KALAH");
 		Button juego = new Button("Nuevo Juego");
@@ -162,7 +186,9 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 	}
 
-
+	/**
+	 * Modifica la acción de cerrar para solicitar confirmación
+	 */
 	private void prepareActions() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -172,6 +198,11 @@ public class KalahGUI extends JFrame implements ActionListener {
 			}
 		});
 	}
+
+	/**
+	 * Método que genera una ventana emergente que solicita confirmación acerca de
+	 * si se desea cerrar la ventana actual o no
+	 */
 	private void close(){
 		String opciones[] = {"Cerrar", "Cancelar"};
 		int elecccion = JOptionPane.showOptionDialog(this, "Confirme si desea salir", "Cerrar",
@@ -180,6 +211,11 @@ public class KalahGUI extends JFrame implements ActionListener {
 			System.exit(0);
 		}
 	}
+
+	/**
+	 * Evento que se realiza cuando se da clic en el botón de abrir
+	 * Genera un JFileChooser
+	 */
 	private void abrirArchivos(){
 
 		archivos = new JFileChooser();
@@ -195,6 +231,10 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * Evento que se realiza cuando se da clic en el botón de guardar
+	 * Genera un JFileChooser
+	 */
 	private void salvarArchivos(){
 		archivos = new JFileChooser();
 		archivos.showSaveDialog(this);
@@ -205,7 +245,6 @@ public class KalahGUI extends JFrame implements ActionListener {
 		}
 
 	}
-
 
 	public static void main(String[] arg){
 		KalahGUI gui = new KalahGUI();
