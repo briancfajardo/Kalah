@@ -3,10 +3,9 @@ package domain;
 import java.util.ArrayList;
 
 public class kalah {
-    private ArrayList<ArrayList<Integer>> semillas = new ArrayList<ArrayList<Integer>>();
-    private ArrayList<Integer> jugador1 = new ArrayList<Integer>();
-    private ArrayList<Integer> jugador2 = new ArrayList<Integer>();
-    private ArrayList<Integer> contenedores = new ArrayList<Integer>();
+    protected ArrayList<Integer> jugador1 = new ArrayList<Integer>();
+    protected ArrayList<Integer> jugador2 = new ArrayList<Integer>();
+    protected ArrayList<Integer> contenedores = new ArrayList<Integer>();
 
     private int rows = 3;
     private int cols;
@@ -33,10 +32,6 @@ public class kalah {
                 }
             }
         }
-
-        semillas.add(0, jugador1);
-        semillas.add(1, contenedores);
-        semillas.add(2, jugador2);
     }
 
     public void vaciarCasa(int x, int y){
@@ -101,12 +96,12 @@ public class kalah {
             } else {
                 if (aux + 1 < cols){
                     if(su == 0){
-                        jugador2.set(aux+1 , jugador2.get(aux + 1) + 1);
+                        jugador2.set(aux +1 , jugador2.get(aux + 1) + 1);
                         ultX = 2;
                         ultY = aux + 1;
                         aux += 1;
                     }else {
-                        jugador2.set(aux, jugador2.get(aux));
+                        jugador2.set(aux, jugador2.get(aux) + 1);
                         su = 0;
                         ultX = 2;
                         ultY = aux;
