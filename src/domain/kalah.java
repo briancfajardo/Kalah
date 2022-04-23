@@ -186,7 +186,9 @@ public class kalah {
         }
     }
 
-
+    /**
+     * Función encargada de cambiar el turno de los jugadores
+     */
     public void cambioTurno(){
         if (turno == 1){
             turno = 2;
@@ -196,14 +198,32 @@ public class kalah {
             mov1 += 1;
         }
     }
+
+    /**
+     * Función que retorna los movimientos del jugador 1
+     * @return
+     */
     public int getMov1(){
         return mov1;
     }
+
+    /**
+     * Función que retorna los movimientos del jugador 2
+     * @return
+     */
     public int getMov2(){
         return mov2;
     }
+
+    /**
+     * Función que retorna el atributo "termina" que es el que dice si el juego terminó
+     * @return
+     */
     public boolean getFin(){return termina; }
 
+    /**
+     * función que valida si el juego terminó
+     */
     public void finalizaJuego(){
         int totalJ1 = semillasJugador(jugador1);
         int totalJ2 = semillasJugador(jugador2);
@@ -225,6 +245,12 @@ public class kalah {
             termina = true;
         }
     }
+
+    /**
+     * Función que calcula el número de semillas que tiene un jugador
+     * @param jugador
+     * @return
+     */
     private  int semillasJugador(ArrayList<Integer> jugador){
         int suma = 0;
         for (Integer i : jugador){
@@ -232,6 +258,10 @@ public class kalah {
         }
         return suma;
     }
+
+    /**
+     * Función auxiliar que imprime por consola el estado de las casas de ambos jugadores y sus respectivos almacenes
+     */
     public void imprimir(){
         for (Integer m : jugador1){
             System.out.println(m + "");
@@ -250,6 +280,10 @@ public class kalah {
         System.out.println("_Camilo es feo_");
     }
 
+    /**
+     * función main de la clase kalah que se usó princiálmente para hace pruebas
+     * @param arg
+     */
     public static void main(String[] arg){
         kalah gui = new kalah(6,3);
         //gui.vaciarCasa(0,3);
