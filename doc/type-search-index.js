@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"domain","l":"kalah"},{"p":"presentation","l":"KalahGUI"},{"p":"presentation","l":"KalahGUIConfig"},{"p":"presentation","l":"KalahGUIFinal"},{"p":"presentation","l":"KalahGUIGame"},{"p":"presentation","l":"saveColor"}];updateSearchResults();
