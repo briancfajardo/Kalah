@@ -162,7 +162,7 @@ public class kalah {
 
     /**
      * Función que valida las reglas del juego de repetir turno y robar fichas
-     * Randoooooom
+     * Randoooooom1
      * @param fila
      * @param columna
      */
