@@ -41,6 +41,7 @@ class kalahTest extends kalah {
         assertEquals(1, super.getTurno());
     }
 
+
     @Test
     void ShouldFinalizaJuego() {
         super.movimientoJug(0,2);
