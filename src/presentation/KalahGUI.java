@@ -13,6 +13,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
+/*
+/*
+ */
 public class KalahGUI extends JFrame implements ActionListener {
 
 	private int ancho = 960;
