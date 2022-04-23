@@ -14,6 +14,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
+/**
+ * Clase que genera la pestaña de finalización del juego con la información
+ * acerca del ganador y perdedor correspondientes, junto con la cantidad
+ * de semillas dentro de sus contenedores
+ */
 public class KalahGUIFinal extends JFrame implements ActionListener {
 
     private int ancho = 960;
@@ -34,6 +39,14 @@ public class KalahGUIFinal extends JFrame implements ActionListener {
     private JFileChooser archivos;
     private File partida;
 
+    /**
+     * Constructor de la clase KalahGUIFinal que tiene como
+     * parámetros la cantidad de semillas en los contenedores de ambos
+     * contenedores
+     *
+     * @param jug1
+     * @param jug2
+     */
     public KalahGUIFinal(int jug1, int jug2){
         this.setContentPane(fondo);
         setTitle("Kalah");
@@ -44,6 +57,11 @@ public class KalahGUIFinal extends JFrame implements ActionListener {
         this.jug2 = jug2;
     }
 
+    /**
+     * Prepara los elementos necesarios para la creación de la pestaña
+     * @param jug1
+     * @param jug2
+     */
     private void prepareElements(int jug1, int jug2){
         setSize(ancho,alto);
         prepareElementsMenu();
@@ -51,6 +69,13 @@ public class KalahGUIFinal extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Prepara los elementos necesarios para el menú, los botones y los
+     * layouts correspondientes
+     *
+     * Crea un JMenuBar y sus respectivos JMenuItems
+     *
+     */
     private void prepareElementsMenu(){
         menu = new JMenuBar();
         setJMenuBar(menu);
@@ -81,6 +106,15 @@ public class KalahGUIFinal extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Genera los elementos necesarios para brindar la información
+     * especificada a los usuarios
+     *
+     * El botón de aceptar retorna a la ventana inicial
+     *
+     * @param jug1
+     * @param jug2
+     */
     private void prepareElementsFinal(int jug1, int jug2){
         int ganador = 1;
         int perdedor = 2;
@@ -128,6 +162,10 @@ public class KalahGUIFinal extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Evento que se realiza cuando se da clic en el botón de abrir
+     * Genera un JFileChooser
+     */
     private void abrirArchivos(){
 
         archivos = new JFileChooser();
@@ -143,6 +181,10 @@ public class KalahGUIFinal extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Evento que se realiza cuando se da clic en el botón de guardar
+     * Genera un JFileChooser
+     */
     private void salvarArchivos(){
         archivos = new JFileChooser();
         archivos.showSaveDialog(this);
@@ -154,6 +196,9 @@ public class KalahGUIFinal extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Modifica la acción de cerrar para solicitar confirmación
+     */
     private void prepareActions() {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -164,6 +209,10 @@ public class KalahGUIFinal extends JFrame implements ActionListener {
         });
     }
 
+    /**
+     * Método que genera una ventana emergente que solicita confirmación acerca de
+     * si se desea cerrar la ventana actual o no
+     */
     private void close(){
         String opciones[] = {"Cerrar", "Cancelar"};
         int elecccion = JOptionPane.showOptionDialog(this, "Confirme si desea salir", "Cerrar",
@@ -200,12 +249,20 @@ public class KalahGUIFinal extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Método princiapl que ejecuta la aplicación
+     * @param arg
+     */
     public static void main(String[] arg){
         KalahGUIFinal gui = new KalahGUIFinal(4,5);
         gui.setResizable(false);
         gui.setLocationRelativeTo(null);
     }
 
+    /**
+     * Clase que genera un nuevo fondo para el JFrame de una imagen dentro del
+     * paquete presentation
+     */
     class Fondo extends JPanel{
         private Image imagen;
         @Override
