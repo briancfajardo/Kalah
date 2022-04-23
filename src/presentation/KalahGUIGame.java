@@ -296,19 +296,6 @@ public class KalahGUIGame extends JFrame implements ActionListener {
             }
         }
         kalah.cambioTurno();
-        finaliza();
-    }
-
-    public void finaliza(){
-        boolean termina = kalah.getFin();
-        if (termina){
-            KalahGUIFinal fin = new KalahGUIFinal(kalah);
-            fin.setVisible(true);
-            fin.setResizable(false);
-            fin.setLocationRelativeTo(null);
-            dispose();
-            //System.exit(0);
-        }
     }
 
     public void colorSemilla(String color, int jugador){
@@ -420,7 +407,20 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if(e.getSource() == nuevo){
-
+            KalahGUIGame game = new KalahGUIGame();
+            game.setVisible(true);
+            game.setResizable(false);
+            game.setLocationRelativeTo(null);
+            dispose();
+        }
+        if(e.getSource() == abrir){
+            abrirArchivos();
+        }
+        if(e.getSource() == salvar){
+            salvarArchivos();
+        }
+        if(e.getSource() == salir){
+            close();
         }
         if(e.getSource() == abrir){
             abrirArchivos();
@@ -450,10 +450,22 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     class EventosCasitas implements ActionListener{
         private int x;
         private int y;
+        public void finaliza(){
+            KalahGUIFinal fin = new KalahGUIFinal(kalah.getContJ1(), kalah.getContJ2());
+            fin.setVisible(true);
+            fin.setResizable(false);
+            fin.setLocationRelativeTo(null);
+            dispose();
+
+        }
         @Override
         public void actionPerformed(ActionEvent e) {
             kalah.movimientoJug(x,y);
-            refresh();
+            if (kalah.getFin()){
+                finaliza();
+            }else{
+                refresh();
+            }
         }
         public void setCords(int x, int y){
             this.x = x;
