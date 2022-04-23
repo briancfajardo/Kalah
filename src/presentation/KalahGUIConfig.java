@@ -13,8 +13,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
+/**
+ * Clase de la ventana de configuración que permite cambiar los colores de los jugadores, de
+ * las semillas, la cantidad de las mismas y el número de casas de los jugadores
+ */
 public class KalahGUIConfig extends JFrame implements ActionListener {
-
     private int ancho = 960;
     private int alto = 540;
     private JMenuBar menu;
@@ -36,6 +39,9 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
     private Integer[] numerosPosibles = {0,1,2,3,4,5,6,7,8};
     private Integer[] casasPosibles = {6,7,8,9,10,11,12};
 
+    /**
+     * Constructor de la clase KalahGUIConfig
+     */
     public KalahGUIConfig(){
         this.setContentPane(fondo);
         setTitle("Kalah");
@@ -43,12 +49,22 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         prepareActions();
         setVisible(true);
     }
+    /**
+     * Prepara los elementos de la ventana de configuración
+     * Modifica el tamaño y añade el menú y los botones iniciales
+     */
     private void prepareElements(){
         setSize(ancho,alto);
         prepareElementsMenu();
         prepareElementsConfig();
     }
-
+    /**
+     * Prepara los elementos necesarios para el menú, los botones y los
+     * layouts correspondientes
+     *
+     * Crea un JMenuBar y sus respectivos JMenuItems
+     *
+     */
     private void prepareElementsMenu(){
         menu = new JMenuBar();
         setJMenuBar(menu);
@@ -78,7 +94,11 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         archivoM.add(salir);
 
     }
-
+    /**
+     * Prepara los elementos necesarios para la configuración, los botones y los
+     * layouts correspondientes
+     *
+     */
     private void prepareElementsConfig(){
 
         JPanel panelBotones = new JPanel();
@@ -219,7 +239,10 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         add(panelBotones);
 
     }
-
+    /**
+     * Modifica la acción de cerrar la pestaña
+     * para confirmar la salida
+     */
     private void prepareActions() {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -229,6 +252,10 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
             }
         });
     }
+    /**
+     * Método que genera una ventana emergente que solicita confirmación acerca de
+     * si se desea cerrar la ventana actual o no
+     */
     private void close(){
         String opciones[] = {"Cerrar", "Cancelar"};
         int elecccion = JOptionPane.showOptionDialog(this, "Confirme si desea salir", "Cerrar",
@@ -237,7 +264,10 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
             System.exit(0);
         }
     }
-
+    /**
+     * Evento que se realiza cuando se da clic en el botón de abrir
+     * Genera un JFileChooser
+     */
     private void abrirArchivos(){
 
         archivos = new JFileChooser();
@@ -252,7 +282,10 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         }
 
     }
-
+    /**
+     * Evento que se realiza cuando se da clic en el botón de guardar
+     * Genera un JFileChooser
+     */
     private void salvarArchivos(){
         archivos = new JFileChooser();
         archivos.showSaveDialog(this);
@@ -263,7 +296,6 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
         }
 
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -284,7 +316,10 @@ public class KalahGUIConfig extends JFrame implements ActionListener {
             close();
         }
     }
-
+    /**
+     * Clase que genera un nuevo fondo para el JFrame de una imagen dentro del
+     * paquete presentation
+     */
     class Fondo extends JPanel{
         private Image imagen;
         @Override

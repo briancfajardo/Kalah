@@ -57,8 +57,6 @@ public class KalahGUI extends JFrame implements ActionListener {
 		setSize(ancho,alto);
 		prepareElementsMenu();
 		prepareElementsBeginning();
-		//prepareElementsBoard();
-
 	}
 
 	/**
