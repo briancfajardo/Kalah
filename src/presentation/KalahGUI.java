@@ -246,6 +246,10 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * Método princiapl que ejecuta la aplicación
+	 * @param arg
+	 */
 	public static void main(String[] arg){
 		KalahGUI gui = new KalahGUI();
 		gui.setResizable(false);
@@ -280,6 +284,11 @@ public class KalahGUI extends JFrame implements ActionListener {
 
 
 	}
+
+	/**
+	 * Clase que genera un nuevo fondo para el JFrame de una imagen dentro del
+	 * paquete presentation
+	 */
 	class Fondo extends JPanel{
 		private Image imagen;
 		@Override
