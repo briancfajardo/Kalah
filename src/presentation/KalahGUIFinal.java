@@ -112,8 +112,8 @@ public class KalahGUIFinal extends JFrame implements ActionListener {
         aceptar.addActionListener(this);
 
         mensaje.setForeground(new Color(0,0,0));
-        mensaje.setFont(new Font("Serif", Font.CENTER_BASELINE, 40));
-        mensaje.setBorder(BorderFactory.createEmptyBorder(40,10,30,10));
+        mensaje.setFont(new Font("Serif", Font.CENTER_BASELINE, 30));
+        mensaje.setBorder(BorderFactory.createEmptyBorder(120,10,20,10));
         mensaje.setOpaque(false);
 
         panelBotones.setBorder(new CompoundBorder(new EmptyBorder(0,1000,30,1000),
@@ -210,7 +210,7 @@ public class KalahGUIFinal extends JFrame implements ActionListener {
         private Image imagen;
         @Override
         public void paint(Graphics g){
-            imagen = new ImageIcon(getClass().getResource("/presentation/podio.jpg")).getImage();
+            imagen = new ImageIcon(getClass().getResource("/presentation/fondoAceptar.jpg")).getImage();
             g.drawImage(imagen,0,0,getWidth(),getHeight(),this);
 
             setOpaque(false);
