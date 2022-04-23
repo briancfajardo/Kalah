@@ -53,6 +53,7 @@ public class kalah {
     }
 
     public void movimientoJug(int x, int y){
+        //System.out.println("X: "+x+" Y: "+y);
         int moverSemillas = jugador2.get(y);
         int aux = y;
         int p = 2;
@@ -146,10 +147,6 @@ public class kalah {
         }
     }
 
-    public void setUltimaPosicion(int newX, int newY){
-        ultX = newX;
-        ultY = newY;
-    }
 
     public void cambioTurno(){
         if (turno == 1){
