@@ -12,6 +12,10 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import domain.kalah;
 
+/**
+ * Clase que genera la ventana principal del juego, contiene las reglas
+ * y la interaccción con la lógica dentro del paquete domain
+ */
 public class KalahGUIGame extends JFrame implements ActionListener {
 
     private int ancho = 960;
@@ -50,6 +54,9 @@ public class KalahGUIGame extends JFrame implements ActionListener {
     private kalah kalah;
 
 
+    /**
+     * Constructor por defecto de la clase KalahGUIGame
+     */
     public KalahGUIGame(){
         kalah = new kalah(cols, cantSemillas1);
         this.setContentPane(fondo);
@@ -59,6 +66,18 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * Constructor de la clase KalahGUIGame, este constructor acepta modificaciones
+     * en color de fondo, color de las semillas, número de semillas y cantidad de casas
+     * para ambos jugadores
+     *
+     * @param color1
+     * @param color2
+     * @param sem1
+     * @param sem2
+     * @param numSem
+     * @param numCas
+     */
     public KalahGUIGame(Color color1, Color color2, String sem1, String sem2, int numSem, int numCas){
         kalah = new kalah(numCas, numSem);
         this.setContentPane(fondo);
@@ -68,6 +87,19 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * Constructor de la clase KalahGUIGame, este constructor acepta modificaciones
+     * en color de fondo, color de las semillas, número de semillas, cantidad de casas
+     * para ambos jugadores y un atributo kalah
+     *
+     * @param color1
+     * @param color2
+     * @param sem1
+     * @param sem2
+     * @param numSem
+     * @param numCas
+     * @param k
+     */
     public KalahGUIGame(Color color1, Color color2, String sem1, String sem2, int numSem, int numCas,kalah k){
         this.kalah = k;
         this.setContentPane(fondo);
@@ -77,6 +109,9 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * Método que prepara los elementos necesarios para esta pestaña
+     */
     private void prepareElements(){
         setSize(ancho,alto);
         prepareElementsMenu();
@@ -84,6 +119,17 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Método que prepara los elementos de la ventana principal con modificaciones según
+     * las configuraciones ingresadas
+     *
+     * @param color1
+     * @param color2
+     * @param sem1
+     * @param sem2
+     * @param numSem
+     * @param numCas
+     */
     private void prepareElements(Color color1, Color color2, String sem1, String sem2, int numSem, int numCas){
         setSize(ancho,alto);
         prepareElementsMenu();
@@ -91,6 +137,10 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Genera todos los elementos del menú, la barra de JMenuBar y sus items,
+     * asignándole a cada item su propio oyente
+     */
     private void prepareElementsMenu(){
         menu = new JMenuBar();
         setJMenuBar(menu);
@@ -131,10 +181,16 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         nuevoPanel.add(config);
         nuevoPanel.add(reiniciar);
         menu.add(nuevoPanel);
-
-
     }
 
+    /**
+     * Genera los elementos necesarios para crear el tablero del juego
+     * Este tablero es el tablero por defecto, con tres semillas en
+     * cada casa (6 casas)
+     * El tablero contiene las casas de cada jugador, los dos almacenes
+     * y los mensajes que definen el número de movimientos y la cantidad de
+     * semillas en cada contenedor de ambos jugadores
+     */
     private void prepareElementsBoard(){
         setLayout(new GridLayout(rows,cols));
         for(int i = 0; i < rows; i++){
@@ -201,7 +257,26 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }kalah.cambioTurno();
     }
 
+    /**
+     * Genera los elementos necesarios para crear el tablero del juego
 
+     * El tablero contiene las casas de cada jugador, los dos almacenes
+     * y los mensajes que definen el número de movimientos y la cantidad de
+     * semillas en cada contenedor de ambos jugadores
+     *
+     * El tablero se modifica según los parámetros de entrada
+     *
+     * La cantidad de semillas para cada cada de los juadores se modifica según el
+     * atributo kalah. En caso de que no sea el turno del jugador, se le
+     * deshabilitarán los botones de sus casas, asimismo, si no hay semillas en una casa
+     *
+     * @param color1
+     * @param color2
+     * @param colSem1
+     * @param colSem2
+     * @param numSem
+     * @param numCas
+     */
     private void prepareElementsBoard(Color color1, Color color2, String colSem1, String colSem2, int numSem, int numCas){
         this.color1 = color1;
         this.color2 = color2;
@@ -298,6 +373,15 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         kalah.cambioTurno();
     }
 
+    /**
+     * Cambia el atributo de la clase por los colores ingresados como parámetro
+     * para el jugador especificado
+     *
+     * El atributo corresponde al fondo de las casas del jugador
+     *
+     * @param color
+     * @param jugador
+     */
     public void colorSemilla(String color, int jugador){
         //Colores posibles: azul, cafe, amarillo, gris, morado, negro, rosado, verde, rojo
         if (jugador == 1){
@@ -310,6 +394,12 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Cambia el número de semillas para los jugadores
+     *
+     * @param cantidad
+     * @param jugador
+     */
     public void numSemilla(int cantidad, int jugador) {
         //Numeros posibles: 0,1,2,3,...
         if (jugador == 1) {
@@ -322,6 +412,16 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Obtiene la imagen correspondiente al contenedor o casa necesaria según
+     * el color de sus semillas y su número
+     *
+     * Estas imágenes están guardadas dentro del paquete presentation
+     *
+     * @param numSemillas
+     * @param color
+     * @return new ImageIcon(getClass().getResource(dir)
+     */
     private  ImageIcon getImage(int numSemillas, String color){
         color = mayusL(color);
         String dir = "/presentation/"+numSemillas+"semillas"+color+".png";
@@ -333,6 +433,16 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         return new ImageIcon(getClass().getResource(dir));
     }
 
+    /**
+     * Obtiene la imagen del zoom correspondiente al contenedor o casa necesaria según
+     * el color de sus semillas y su número
+     *
+     * Estas imágenes están guardadas dentro del paquete presentation
+     *
+     * @param numSemillas
+     * @param color
+     * @return new ImageIcon(getClass().getResource(dir)
+     */
     private  ImageIcon getImageZoom(int numSemillas, String color){
         color = mayusL(color);
         String dir = "/presentation/zoom"+numSemillas+"semillas"+color+".png";
@@ -344,6 +454,12 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         return new ImageIcon(getClass().getResource(dir));
     }
 
+    /**
+     * Cambia la primera letra por su mayúscula
+     *
+     * @param palabra
+     * @return palabra
+     */
     private String mayusL(String palabra){
         String firstLtr = palabra.substring(0, 1);
         String restLtrs = palabra.substring(1, palabra.length());
@@ -352,6 +468,11 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         palabra = firstLtr + restLtrs;
         return palabra;
     }
+
+    /**
+     * Crea la nueva pestaña de la misma clase según la variación del
+     * kalah
+     */
     private void refresh(){
         KalahGUIGame game = new KalahGUIGame(color1, color2, semillas1, semillas2, cantSemillas1, cols, kalah);
         game.setVisible(true);
@@ -360,6 +481,10 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         dispose();
     }
 
+    /**
+     * Modifica la acción de cerrar la pestaña
+     * para confirmar la salida
+     */
     private void prepareActions() {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -369,6 +494,11 @@ public class KalahGUIGame extends JFrame implements ActionListener {
             }
         });
     }
+
+    /**
+     * Genera la nueva pestaña de confirmación para verificar
+     * la salida de la pestaña actual
+     */
     private void close(){
         String opciones[] = {"Cerrar", "Cancelar"};
         int elecccion = JOptionPane.showOptionDialog(this, "Confirme si desea salir", "Cerrar",
@@ -377,6 +507,11 @@ public class KalahGUIGame extends JFrame implements ActionListener {
             System.exit(0);
         }
     }
+
+    /**
+     * Evento que se realiza cuando se da clic en el botón de abrir
+     * Genera un JFileChooser
+     */
     private void abrirArchivos(){
 
         archivos = new JFileChooser();
@@ -392,6 +527,10 @@ public class KalahGUIGame extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Evento que se realiza cuando se da clic en el botón de guardar
+     * Genera un JFileChooser
+     */
     private void salvarArchivos(){
         archivos = new JFileChooser();
         archivos.showSaveDialog(this);
@@ -422,15 +561,6 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         if(e.getSource() == salir){
             close();
         }
-        if(e.getSource() == abrir){
-            abrirArchivos();
-        }
-        if(e.getSource() == salvar){
-            salvarArchivos();
-        }
-        if(e.getSource() == salir){
-            close();
-        }
         if(e.getSource() == config){
             KalahGUIConfig game = new KalahGUIConfig();
             game.setVisible(true);
@@ -447,9 +577,19 @@ public class KalahGUIGame extends JFrame implements ActionListener {
         }
 
     }
+
+    /**
+     * Clase que contiene los eventos que modelan la lógica del juego
+     */
     class EventosCasitas implements ActionListener{
         private int x;
         private int y;
+
+        /**
+         * Método que genera una nueva pestaña de tipo KalahGUIFinal que genera el mensaje
+         * de finalización, señalando al ganador y el contenido de cada
+         * contenedor
+         */
         public void finaliza(){
             KalahGUIFinal fin = new KalahGUIFinal(kalah.getContJ1(), kalah.getContJ2());
             fin.setVisible(true);
@@ -467,17 +607,38 @@ public class KalahGUIGame extends JFrame implements ActionListener {
                 refresh();
             }
         }
+
+        /**
+         * Modifica las coordenas según los parámetros
+         * @param x
+         * @param y
+         */
         public void setCords(int x, int y){
             this.x = x;
             this.y = y;
         }
+
+        /**
+         * Obtiene el atributo entero x
+         * @return x
+         */
         public int getX(){
             return x;
         }
+
+        /**
+         * Obtiene el atributo entero y
+         * @return y
+         */
         public int getY() {
             return y;
         }
     }
+
+    /**
+     * Clase que genera un nuevo fondo para el JFrame de una imagen dentro del
+     * paquete presentation
+     */
     class Fondo extends JPanel{
         private Image imagen;
         @Override
